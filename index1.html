@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Share Real-time Location (Tracker)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <script src="/socket.io/socket.io.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 18px; max-width:700px; margin:auto; }
+    input, button { padding:8px; font-size:1rem; margin:6px 0; }
+    .status { margin-top:10px; color: #333; }
+  </style>
+</head>
+<body>
+  <h1>Share Real-time Location</h1>
+  <p>Enter an identifier (phone number or name). The browser will ask to share location — allow it.</p>
+
+  <label>
+    Identifier (e.g. number):<br>
+    <input id="idInput" placeholder="e.g. +923001234567" />
+  </label>
+  <br>
+  <button id="startBtn">Start Sharing</button>
+  <button id="stopBtn" disabled>Stop Sharing</button>
+
+  <div class="status" id="status">Not sharing</div>
+
+  <script>
+    const socket = io();
+    let watchId = null;
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const status = document.getElementById('status');
+
+    startBtn.addEventListener('click', () => {
+      const identifier = document.getElementById('idInput').value.trim();
+      if (!identifier) return alert('Enter an identifier (phone or name).');
+
+      if (!('geolocation' in navigator)) {
+        return alert('Geolocation not supported by this browser.');
+      }
+
+      // Tell server which identifier this client represents (for simple auth)
+      socket.emit('register-tracker', { id: identifier });
+
+      watchId = navigator.geolocation.watchPosition(pos => {
+        const payload = {
+          id: identifier,
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude,
+          accuracy: pos.coords.accuracy,
+          timestamp: pos.timestamp
+        };
+        socket.emit('loc-update', payload);
+        status.textContent = `Sharing — lat:${payload.lat.toFixed(5)} lon:${payload.lon.toFixed(5)} (accuracy ${payload.accuracy}m)`;
+      }, err => {
+        status.textContent = 'Error getting location: ' + err.message;
+      }, { enableHighAccuracy: true, maximumAge: 2000, timeout: 10000 });
+
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+    });
+
+    stopBtn.addEventListener('click', () => {
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+      }
+      socket.emit('stop-sharing');
+      status.textContent = 'Stopped sharing';
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+    });
+  </script>
+</body>
+</html>

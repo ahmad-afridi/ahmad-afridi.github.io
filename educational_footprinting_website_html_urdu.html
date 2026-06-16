@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Educational Footprinting Lab</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(180deg,#071029 0%,#071726 100%);color:#e6eef6;margin:0;padding:24px}
+    .container{max-width:1000px;margin:0 auto}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+    h1{font-size:22px;margin:0}
+    p.lead{color:var(--muted);margin:6px 0 0}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    .card{background:var(--card);padding:16px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    label{display:block;margin-bottom:6px;color:var(--muted);font-size:13px}
+    input[type=text],textarea,select{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit}
+    button{background:var(--accent);color:#04202a;border:none;padding:10px 12px;border-radius:10px;cursor:pointer}
+    .result{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;margin-top:10px;font-size:13px}
+    footer{color:var(--muted);margin-top:18px;font-size:13px}
+    .tools-list{display:flex;flex-direction:column;gap:10px}
+    .tool-row{display:flex;gap:8px;align-items:center}
+    .badge{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-size:12px}
+    .quiz{margin-top:10px}
+    .q{margin-bottom:8px}
+    .notice{background:#2b2930;padding:10px;border-radius:8px;color:#ffd3a5}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>Educational Footprinting Lab</h1>
+        <p class="lead">This page is strictly for educational purposes — it performs no real network scanning or probing. All tools are simulated.</p>
+      </div>
+      <div class="badge">Safety: Ethical & Legal Guidance Included</div>
+    </header>
+
+    <div class="grid">
+      <main class="card">
+        <h2>What is Footprinting?</h2>
+        <p>Footprinting is the information-gathering phase — collecting domain data, DNS records, WHOIS details, server headers, and public information. Here we learn the concepts and view simulated examples.</p>
+
+        <section>
+          <h3>Simulated Tools</h3>
+          <div class="tools-list">
+            <div class="tool-row card">
+              <div style="flex:1">
+                <label>WHOIS Simulator (enter a domain)</label>
+                <input id="whois-input" type="text" placeholder="e.g. example.com" />
+                <button onclick="runWhois()">Show Result</button>
+                <div id="whois-result" class="result"></div>
+              </div>
+            </div>
+
+            <div class="tool-row card">
+              <div style="flex:1">
+                <label>DNS Simulator (choose record type)</label>
+                <select id="dns-type"><option>A</option><option>MX</option><option>NS</option><option>TXT</option></select>
+                <input id="dns-input" type="text" placeholder="e.g. example.com" style="margin-top:8px" />
+                <button onclick="runDns()">Show Record</button>
+                <div id="dns-result" class="result"></div>
+              </div>
+            </div>
+
+            <div class="tool-row card">
+              <div style="flex:1">
+                <label>HTTP Header Analyzer (paste server headers)</label>
+                <textarea id="header-input" rows="4" placeholder="e.g. HTTP/1.1 200 OK\nServer: nginx\nX-Powered-By: PHP/7.4"></textarea>
+                <button onclick="analyzeHeaders()">Analyze</button>
+                <div id="header-result" class="result"></div>
+              </div>
+            </div>
+
+            <div class="tool-row card">
+              <div style="flex:1">
+                <label>Reverse IP — Simulated</label>
+                <input id="revip-input" type="text" placeholder="e.g. 93.184.216.34" />
+                <button onclick="runRevIP()">Show Associated Domains</button>
+                <div id="revip-result" class="result"></div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <h3>Responsible Practices (Ethical)</h3>
+          <ul>
+            <li>Always obtain owner permission.</li>
+            <li>Stay within legal boundaries — test only your own or authorized systems.</li>
+            <li>Do not share sensitive data publicly.</li>
+          </ul>
+        </section>
+
+        <section class="card" style="margin-top:12px">
+          <h3>Quick Quiz</h3>
+          <div class="quiz">
+            <div class="q">1) Which item is NOT typically collected during footprinting?</div>
+            <label><input type="radio" name="q1" value="a"> DNS records</label><br>
+            <label><input type="radio" name="q1" value="b"> Passwords</label><br>
+            <label><input type="radio" name="q1" value="c"> WHOIS data</label><br>
+            <div style="margin-top:8px"><button onclick="checkQuiz()">Check Answer</button></div>
+            <div id="quiz-result" class="result"></div>
+          </div>
+        </section>
+
+      </main>
+
+      <aside>
+        <div class="card">
+          <h3>Quick Guide</h3>
+          <ol>
+            <li>Read foundational materials — networks, DNS, WHOIS.</li>
+            <li>Set up a safe lab (use your own domain or a local VM).</li>
+            <li>Always ask for permission before probing systems.</li>
+          </ol>
+          <div style="margin-top:8px" class="notice">Legal: This page and tools are not intended for scanning or harming real systems.</div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Further Reading</h3>
+          <ul>
+            <li>WHOIS and DNS basics</li>
+            <li>Interpreting HTTP headers</li>
+            <li>Ethics of ethical hacking</li>
+          </ul>
+        </div>
+      </aside>
+
+    </div>
+
+    <section class="card" style="margin-top:12px">
+      <h3>Accessible Tools & Search Engines (Links)</h3>
+      <p>The list below includes official links to widely used, legal OSINT tools and search engines — for educational and lawful use only.</p>
+      <ul>
+        <li>Shodan — https://www.shodan.io/</li>
+        <li>Censys — https://censys.com/</li>
+        <li>Wayback Machine (Internet Archive) — https://archive.org/</li>
+        <li>VirusTotal — https://www.virustotal.com/</li>
+        <li>Have I Been Pwned — https://haveibeenpwned.com/</li>
+        <li>Social Searcher — https://www.social-searcher.com/</li>
+        <li>DuckDuckGo — https://duckduckgo.com/</li>
+        <li>Google — https://www.google.com/</li>
+        <li>Bing — https://www.bing.com/</li>
+        <li>Pipl (professional / paid) — https://pipl.com/</li>
+        <li>Wayback Machine Advanced Search — https://archive.org/web/web-advancedsearch.php</li>
+        <li>Pwned Passwords — https://haveibeenpwned.com/Passwords</li>
+      </ul>
+      <p>Platform data request pages (legal channels):</p>
+      <ul>
+        <li>WhatsApp / Meta: https://www.whatsapp.com/legal/ (and Meta law enforcement request channels)</li>
+        <li>Facebook / Instagram (Meta): https://transparency.facebook.com/ and https://www.facebook.com/help/</li>
+        <li>X (Twitter): https://help.twitter.com/en/rules-and-policies/twitter-law-enforcement-options</li>
+        <li>Telegram: https://telegram.org/faq and Telegram legal request pages</li>
+      </ul>
+      <div class="notice">Note: Some services require formal legal process or law‑enforcement requests to release data. This list is for educational purposes only.</div>
+    </section>
+
+        <section class="card" style="margin-top:12px">
+          <h3>Simulated Port Scan & Service Version</h3>
+          <p>This educational tool shows a <em>simulated</em> port scan and service version detection output — <strong>no real network scanning is performed</strong>. Use this to learn how results are typically reported.</p>
+
+          <label>Target (IP or domain)</label>
+          <input id="port-target" type="text" placeholder="e.g. 93.184.216.34 or example.com" />
+
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button onclick="runPortScan()">Run Simulated Port Scan</button>
+            <button onclick="runServiceVersion()">Detect Service Versions (Simulated)</button>
+          </div>
+
+          <div id="port-result" class="result" style="margin-top:10px"></div>
+          <div id="version-result" class="result" style="margin-top:10px"></div>
+
+          <div style="margin-top:8px" class="notice">Reminder: Performing real port scans without permission can be illegal or against terms of service. Always scan only authorized targets in a controlled lab.</div>
+        </section>
+
+    <footer>
+      <p>How to use: Save this HTML file (for example <code>footprint-edu-en.html</code>) and open it in a browser. If you want, I can also convert this into a PowerPoint or PDF in English.</p>
+    </footer>
+  </div>
+
+<script>
+function runWhois(){
+  const d=document.getElementById('whois-input').value.trim();
+  const out=document.getElementById('whois-result');
+  if(!d){out.textContent='Please enter a domain.';return}
+  out.innerHTML='<strong>WHOIS Result (sample)</strong><br>'+
+    'Domain: '+escapeHtml(d)+'<br>'+ 
+    'Registrar: Example Registrar<br>'+ 
+    'Registered On: 2010-04-15<br>'+ 
+    'Expiry: 2026-04-15<br>'+ 
+    'Name Servers: ns1.example.com, ns2.example.com<br>'+ 
+    'Registrant: Example Organization';
+}
+
+function runDns(){
+  const host=document.getElementById('dns-input').value.trim();
+  const type=document.getElementById('dns-type').value;
+  const out=document.getElementById('dns-result');
+  if(!host){out.textContent='Please enter a domain.';return}
+  let sample='';
+  if(type==='A') sample=host+' A 93.184.216.34';
+  if(type==='MX') sample=host+' MX 10 mail.'+host;
+  if(type==='NS') sample=host+' NS ns1.'+host+', ns2.'+host;
+  if(type==='TXT') sample=host+' TXT "v=spf1 include:_spf.example.com ~all"';
+  out.innerHTML='<strong>DNS ('+type+') - sample</strong><br>'+escapeHtml(sample);
+}
+
+function analyzeHeaders(){
+  const txt=document.getElementById('header-input').value.trim();
+  const out=document.getElementById('header-result');
+  if(!txt){out.textContent='Please paste headers.';return}
+  let notes=[];
+  if(/Server:/i.test(txt)) notes.push('Server header found — may reveal web server type');
+  if(/X-Powered-By:/i.test(txt)) notes.push('X-Powered-By header: may reveal tech stack — useful for hardening');
+  if(/cookie:/i.test(txt)) notes.push('Cookie header: may contain session or identifying info');
+  if(notes.length===0) notes.push('No notable observations — this is a sample.');
+  out.innerHTML='<strong>Analysis</strong><br>- '+notes.join('<br>- ');
+}
+
+function runRevIP(){
+  const ip=document.getElementById('revip-input').value.trim();
+  const out=document.getElementById('revip-result');
+  if(!ip){out.textContent='Please enter an IP.';return}
+  out.innerHTML='<strong>Reverse IP (sample)</strong><br>Discovered domains:<br>- example.com<br>- docs.example.com<br>- blog.example.com';
+}
+
+function runPortScan(){
+  const target=document.getElementById('port-target').value.trim();
+  const out=document.getElementById('port-result');
+  const verOut=document.getElementById('version-result');
+  out.textContent=''; verOut.textContent='';
+  if(!target){out.textContent='Please enter a target (IP or domain).';return}
+  // Simulated port list — vary by target string to show different outputs for learning
+  let samples = {
+    'example.com':['22/tcp open ssh','80/tcp open http','443/tcp open https','3306/tcp closed mysql'],
+    '93.184.216.34':['22/tcp open ssh','80/tcp open http','443/tcp open https']
+  };
+  let defaultSample=['21/tcp open ftp','22/tcp open ssh','80/tcp open http','139/tcp closed netbios','443/tcp open https'];
+  let result = samples[target] || defaultSample;
+  out.innerHTML='<strong>Simulated Port Scan Results for '+escapeHtml(target)+'</strong><br>' + result.map(r=>escapeHtml(r)).join('<br>');
+}
+
+function runServiceVersion(){
+  const target=document.getElementById('port-target').value.trim();
+  const out=document.getElementById('version-result');
+  out.textContent='';
+  if(!target){out.textContent='Please enter a target (IP or domain).';return}
+  // Simulated service/version detection
+  let versions = {
+    'example.com':['22/tcp ssh OpenSSH 7.6p1','80/tcp http nginx 1.14.0','443/tcp http nginx 1.14.0 (TLS)'],
+    '93.184.216.34':['22/tcp ssh OpenSSH 7.6p1','80/tcp http Apache/2.4.29','443/tcp https Apache/2.4.29 (TLS)']
+  };
+  let defaultVer=['21/tcp ftp vsftpd 3.0.2','22/tcp ssh OpenSSH 7.2p2','80/tcp http nginx 1.10.3','443/tcp https nginx 1.10.3 (TLS)'];
+  let result = versions[target] || defaultVer;
+  out.innerHTML='<strong>Simulated Service Version Detection for '+escapeHtml(target)+'</strong><br>' + result.map(r=>escapeHtml(r)).join('<br>');
+}
+
+function checkQuiz(){
+  const ans=document.querySelector('input[name=q1]:checked');
+  const out=document.getElementById('quiz-result');
+  if(!ans){out.textContent='Select an answer.';return}
+  out.textContent=(ans.value==='b')?'Correct — passwords are not typically discoverable via footprinting.':'Incorrect — try again.';
+}
+
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[c]})}
+</script>
+</body>
+</html>

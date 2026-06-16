@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ZAIQA — Premium Fast Food</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --red:#E63329;--orange:#F97316;--yellow:#FCD34D;--green:#22C55E;
+  --bg:#0D0D0D;--bg2:#161616;--bg3:#1E1E1E;--bg4:#252525;
+  --text:#F5F5F5;--muted:#888;--border:rgba(255,255,255,0.08);
+  --card:rgba(255,255,255,0.04);--radius:16px;--shadow:0 8px 40px rgba(0,0,0,0.5);
+  --accent:var(--red);--font:'Outfit',sans-serif;
+}
+[data-theme="light"]{
+  --bg:#FFF8F0;--bg2:#FFF;--bg3:#F5EDE3;--bg4:#EDE0D4;
+  --text:#1A0A00;--muted:#7C5C3E;--border:rgba(0,0,0,0.1);
+  --card:rgba(0,0,0,0.03);--shadow:0 8px 40px rgba(0,0,0,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;transition:background .3s,color .3s,border-color .3s;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden;}
+/* ===SCROLLBAR=== */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px;}
+
+/* ===NAVBAR=== */
+nav{position:fixed;top:0;width:100%;z-index:1000;padding:0 2rem;height:70px;display:flex;align-items:center;justify-content:space-between;background:rgba(13,13,13,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+[data-theme="light"] nav{background:rgba(255,248,240,0.9);}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--yellow);text-shadow:2px 2px 0 var(--red);letter-spacing:.05em;cursor:pointer;}
+.logo span{color:var(--red);}
+.nav-links{display:flex;gap:.2rem;list-style:none;}
+.nav-links a{color:var(--text);text-decoration:none;padding:.5rem .9rem;border-radius:8px;font-size:.85rem;font-weight:500;cursor:pointer;display:block;}
+.nav-links a:hover,.nav-links a.active{background:var(--red);color:#fff;}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.lang-btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:.4rem .8rem;border-radius:8px;cursor:pointer;font-size:.8rem;font-family:var(--font);}
+.theme-btn{background:var(--card);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
+.cart-btn{background:var(--red);color:#fff;border:none;padding:.5rem 1.2rem;border-radius:10px;cursor:pointer;font-size:.85rem;font-weight:600;display:flex;align-items:center;gap:.5rem;font-family:var(--font);}
+.cart-count{background:#fff;color:var(--red);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;}
+.mobile-menu-btn{display:none;background:none;border:1px solid var(--border);color:var(--text);padding:.5rem;border-radius:8px;cursor:pointer;font-size:1.2rem;}
+
+/* ===PAGES=== */
+.page{display:none;padding-top:70px;min-height:100vh;}
+.page.active{display:block;}
+
+/* ===HERO=== */
+.hero{min-height:calc(100vh - 70px);display:flex;align-items:center;position:relative;overflow:hidden;padding:2rem;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(230,51,41,.15),transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(249,115,22,.1),transparent 50%);z-index:0;}
+.hero-content{position:relative;z-index:2;max-width:580px;padding-left:4rem;}
+.hero-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(230,51,41,.15);border:1px solid rgba(230,51,41,.3);color:var(--red);padding:.4rem 1rem;border-radius:50px;font-size:.8rem;font-weight:600;margin-bottom:1.5rem;letter-spacing:.08em;}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4rem,9vw,8rem);line-height:.92;color:var(--yellow);text-shadow:5px 5px 0 var(--red),10px 10px 30px rgba(230,51,41,.3);margin-bottom:1.5rem;}
+.hero p{font-size:1.1rem;color:var(--muted);line-height:1.7;margin-bottom:2rem;max-width:450px;}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.btn-primary{background:linear-gradient(135deg,var(--red),var(--orange));color:#fff;border:none;padding:.9rem 2rem;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:var(--font);box-shadow:0 8px 30px rgba(230,51,41,.4);transition:transform .2s,box-shadow .2s;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(230,51,41,.5);}
+.btn-secondary{background:var(--card);color:var(--text);border:1px solid var(--border);padding:.9rem 2rem;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;font-family:var(--font);}
+.btn-secondary:hover{background:var(--bg3);}
+.hero-3d{position:absolute;right:5%;top:50%;transform:translateY(-50%);z-index:1;}
+#heroCanvas{width:420px;height:420px;}
+.hero-stats{display:flex;gap:2rem;margin-top:3rem;padding-top:2rem;border-top:1px solid var(--border);}
+.hstat{text-align:center;}
+.hstat-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--yellow);}
+.hstat-lbl{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;}
+
+/* ===SECTIONS=== */
+.section{padding:5rem 2rem;}
+.container{max-width:1200px;margin:0 auto;}
+.section-head{text-align:center;margin-bottom:3rem;}
+.section-tag{display:inline-block;background:rgba(230,51,41,.12);color:var(--red);font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:.3rem 1rem;border-radius:50px;margin-bottom:1rem;}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,5rem);color:var(--text);line-height:1;}
+.section-sub{color:var(--muted);margin-top:.8rem;font-size:.95rem;}
+
+/* ===PRODUCTS GRID=== */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;}
+.product-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:transform .3s,box-shadow .3s;cursor:pointer;}
+.product-card:hover{transform:translateY(-8px);box-shadow:var(--shadow);}
+.product-img{width:100%;height:180px;display:flex;align-items:center;justify-content:center;font-size:5rem;background:linear-gradient(135deg,var(--bg3),var(--bg4));position:relative;}
+.product-badge{position:absolute;top:12px;right:12px;background:var(--red);color:#fff;font-size:.7rem;font-weight:700;padding:.25rem .6rem;border-radius:50px;}
+.product-body{padding:1.2rem;}
+.product-name{font-size:1.05rem;font-weight:700;margin-bottom:.3rem;}
+.product-desc{font-size:.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.5;}
+.product-footer{display:flex;align-items:center;justify-content:space-between;}
+.product-price{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--yellow);}
+.product-price span{font-size:.9rem;color:var(--muted);font-family:var(--font);font-weight:400;text-decoration:line-through;margin-right:.3rem;}
+.add-btn{background:var(--red);color:#fff;border:none;width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:1.3rem;display:flex;align-items:center;justify-content:center;}
+.add-btn:hover{background:var(--orange);}
+
+/* ===OFFERS=== */
+.offers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.offer-card{border-radius:var(--radius);padding:2rem;position:relative;overflow:hidden;cursor:pointer;}
+.offer-card.red{background:linear-gradient(135deg,#E63329,#B71C1C);}
+.offer-card.orange{background:linear-gradient(135deg,#F97316,#EA580C);}
+.offer-card.yellow{background:linear-gradient(135deg,#F59E0B,#D97706);}
+.offer-emoji{font-size:4rem;position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);opacity:.3;}
+.offer-tag{background:rgba(255,255,255,.2);color:#fff;font-size:.7rem;font-weight:700;padding:.2rem .6rem;border-radius:50px;display:inline-block;margin-bottom:.5rem;letter-spacing:.1em;}
+.offer-title{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:#fff;line-height:1;margin-bottom:.5rem;}
+.offer-desc{font-size:.85rem;color:rgba(255,255,255,.8);margin-bottom:1rem;}
+.offer-btn{background:#fff;color:var(--red);border:none;padding:.5rem 1.2rem;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:var(--font);}
+
+/* ===REVIEWS=== */
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;}
+.review-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;}
+.review-stars{color:var(--yellow);font-size:1rem;margin-bottom:.8rem;}
+.review-text{font-size:.9rem;color:var(--muted);line-height:1.6;margin-bottom:1.2rem;font-style:italic;}
+.review-author{display:flex;align-items:center;gap:.8rem;}
+.review-avatar{width:40px;height:40px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.review-name{font-weight:600;font-size:.9rem;}
+.review-loc{font-size:.75rem;color:var(--muted);}
+
+/* ===APP DOWNLOAD=== */
+.app-section{background:linear-gradient(135deg,var(--bg2),var(--bg3));border-radius:24px;padding:4rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.app-text{max-width:500px;}
+.app-title{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--yellow);line-height:1;margin-bottom:1rem;}
+.app-desc{color:var(--muted);margin-bottom:1.5rem;line-height:1.6;}
+.app-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+.app-store-btn{background:var(--bg4);border:1px solid var(--border);color:var(--text);padding:.8rem 1.5rem;border-radius:12px;cursor:pointer;display:flex;align-items:center;gap:.8rem;font-family:var(--font);}
+.app-store-btn .icon{font-size:1.6rem;}
+.app-store-btn .txt small{display:block;font-size:.7rem;color:var(--muted);}
+.app-store-btn .txt strong{font-size:1rem;font-weight:700;}
+.app-mockup{font-size:8rem;text-align:center;}
+
+/* ===FOOTER=== */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:4rem 2rem 2rem;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand p{color:var(--muted);font-size:.85rem;line-height:1.7;margin:1rem 0;}
+.footer-social{display:flex;gap:.5rem;}
+.social-btn{background:var(--card);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
+.footer-col h4{font-weight:700;margin-bottom:1rem;font-size:.95rem;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:.5rem;}
+.footer-col ul li a{color:var(--muted);text-decoration:none;font-size:.85rem;cursor:pointer;}
+.footer-col ul li a:hover{color:var(--red);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:gap;gap:1rem;}
+.footer-bottom p{font-size:.8rem;color:var(--muted);}
+.newsletter{display:flex;gap:.5rem;}
+.newsletter input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.6rem 1rem;border-radius:8px;font-family:var(--font);font-size:.85rem;}
+.newsletter button{background:var(--red);color:#fff;border:none;padding:.6rem 1.2rem;border-radius:8px;cursor:pointer;font-family:var(--font);font-weight:600;}
+
+/* ===MENU PAGE=== */
+.menu-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;}
+.filter-btn{background:var(--card);border:1px solid var(--border);color:var(--text);padding:.5rem 1.2rem;border-radius:50px;cursor:pointer;font-size:.85rem;font-family:var(--font);font-weight:500;}
+.filter-btn.active,.filter-btn:hover{background:var(--red);color:#fff;border-color:var(--red);}
+.search-bar{display:flex;align-items:center;gap:.8rem;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.8rem 1.2rem;margin-bottom:2rem;max-width:500px;}
+.search-bar input{flex:1;background:none;border:none;color:var(--text);font-size:.95rem;font-family:var(--font);outline:none;}
+.search-bar span{color:var(--muted);font-size:1.2rem;}
+
+/* ===CART SIDEBAR=== */
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:2000;display:none;backdrop-filter:blur(4px);}
+.cart-overlay.open{display:block;}
+.cart-sidebar{position:fixed;right:0;top:0;height:100%;width:min(400px,90vw);background:var(--bg2);z-index:2001;padding:1.5rem;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);}
+.cart-sidebar.open{transform:translateX(0);}
+.cart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.cart-header h3{font-size:1.2rem;font-weight:700;}
+.close-btn{background:var(--card);border:1px solid var(--border);color:var(--text);width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1.2rem;}
+.cart-items{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:1rem;}
+.cart-item{background:var(--bg3);border-radius:12px;padding:1rem;display:flex;align-items:center;gap:1rem;}
+.cart-item-emoji{font-size:2.5rem;min-width:50px;text-align:center;}
+.cart-item-info{flex:1;}
+.cart-item-name{font-weight:600;font-size:.9rem;}
+.cart-item-price{color:var(--yellow);font-weight:700;}
+.qty-control{display:flex;align-items:center;gap:.5rem;}
+.qty-btn{background:var(--bg4);border:1px solid var(--border);color:var(--text);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
+.qty-num{font-weight:700;min-width:20px;text-align:center;}
+.cart-footer{border-top:1px solid var(--border);padding-top:1.5rem;margin-top:1rem;}
+.cart-total{display:flex;justify-content:space-between;font-size:1.1rem;font-weight:700;margin-bottom:1rem;}
+.cart-total span:last-child{color:var(--yellow);}
+.checkout-btn{width:100%;background:linear-gradient(135deg,var(--red),var(--orange));color:#fff;border:none;padding:1rem;border-radius:12px;font-size:1rem;font-weight:700;cursor:pointer;font-family:var(--font);}
+
+/* ===CHECKOUT PAGE=== */
+.checkout-grid{display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:start;}
+.form-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;}
+.form-section h3{font-size:1.1rem;font-weight:700;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.form-group{margin-bottom:1.2rem;}
+.form-group label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:.4rem;font-weight:500;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.8rem 1rem;border-radius:10px;font-size:.9rem;font-family:var(--font);outline:none;}
+.form-group input:focus,.form-group select:focus{border-color:var(--red);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.payment-methods{display:flex;flex-direction:column;gap:.8rem;}
+.payment-opt{background:var(--bg3);border:2px solid var(--border);border-radius:12px;padding:1rem 1.2rem;cursor:pointer;display:flex;align-items:center;gap:1rem;transition:border-color .2s;}
+.payment-opt.selected{border-color:var(--red);}
+.payment-opt .pay-icon{font-size:1.5rem;}
+.payment-opt .pay-name{font-weight:600;font-size:.9rem;}
+.order-summary-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:sticky;top:90px;}
+
+/* ===ORDER TRACKING=== */
+.track-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;max-width:600px;margin:0 auto;}
+.track-steps{display:flex;flex-direction:column;gap:0;}
+.track-step{display:flex;align-items:flex-start;gap:1.2rem;padding:1rem 0;position:relative;}
+.track-step:not(:last-child)::after{content:'';position:absolute;left:19px;top:52px;width:2px;height:calc(100% - 12px);background:var(--border);}
+.track-step.done::after{background:var(--green);}
+.step-icon{width:40px;height:40px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;background:var(--bg3);}
+.track-step.done .step-icon{border-color:var(--green);background:rgba(34,197,94,.1);}
+.track-step.active .step-icon{border-color:var(--orange);background:rgba(249,115,22,.1);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(249,115,22,.4);}50%{box-shadow:0 0 0 8px rgba(249,115,22,0);}}
+.step-name{font-weight:600;font-size:.9rem;}
+.step-time{font-size:.8rem;color:var(--muted);}
+.track-eta{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:1rem 1.5rem;margin-top:1.5rem;display:flex;align-items:center;justify-content:space-between;}
+.eta-label{font-size:.8rem;color:var(--muted);}
+.eta-time{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--green);}
+
+/* ===ABOUT=== */
+.about-hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));border-radius:24px;padding:4rem;text-align:center;margin-bottom:3rem;}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem;}
+.team-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center;}
+.team-avatar{font-size:3rem;width:70px;height:70px;border-radius:50%;background:var(--bg3);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
+.team-name{font-weight:700;margin-bottom:.2rem;}
+.team-role{font-size:.8rem;color:var(--red);}
+
+/* ===BRANCHES=== */
+.branches-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+.branch-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.branch-map{height:180px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;}
+.branch-map::after{content:'📍';position:absolute;animation:pin 1s ease-in-out infinite alternate;}
+@keyframes pin{from{transform:translateY(0);}to{transform:translateY(-8px);}}
+.branch-info{padding:1.5rem;}
+.branch-name{font-weight:700;font-size:1.05rem;margin-bottom:.5rem;}
+.branch-detail{display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--muted);margin-bottom:.4rem;}
+.branch-status{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);margin-right:.3rem;}
+
+/* ===GALLERY=== */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+.gallery-item{border-radius:12px;overflow:hidden;cursor:pointer;position:relative;background:var(--bg2);border:1px solid var(--border);}
+.gallery-item:nth-child(3n+1){grid-column:span 2;grid-row:span 2;}
+.gallery-img{width:100%;height:100%;min-height:150px;display:flex;align-items:center;justify-content:center;font-size:clamp(3rem,8vw,6rem);transition:transform .3s;}
+.gallery-item:hover .gallery-img{transform:scale(1.05);}
+.gallery-item .gallery-overlay{position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+.gallery-overlay span{color:#fff;font-size:.85rem;font-weight:600;}
+
+/* ===CONTACT=== */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;}
+.contact-info{display:flex;flex-direction:column;gap:1rem;}
+.contact-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;display:flex;align-items:center;gap:1rem;}
+.contact-icon{font-size:1.8rem;min-width:50px;text-align:center;}
+.contact-label{font-size:.8rem;color:var(--muted);}
+.contact-val{font-weight:600;}
+.whatsapp-btn{background:#25D366;color:#fff;border:none;padding:1rem;border-radius:12px;width:100%;cursor:pointer;font-size:.95rem;font-weight:700;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:.5rem;}
+
+/* ===LOGIN/SIGNUP=== */
+.auth-card{max-width:440px;margin:2rem auto;background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:2.5rem;}
+.auth-tabs{display:flex;background:var(--bg3);border-radius:12px;padding:.25rem;margin-bottom:2rem;}
+.auth-tab{flex:1;padding:.7rem;text-align:center;border-radius:10px;cursor:pointer;font-weight:600;font-size:.9rem;border:none;background:none;color:var(--muted);font-family:var(--font);}
+.auth-tab.active{background:var(--red);color:#fff;}
+.form-group .eye-wrap{position:relative;}
+.form-group .eye-wrap input{padding-right:3rem;}
+.form-group .eye-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;}
+.forgot-link{font-size:.8rem;color:var(--red);cursor:pointer;text-align:right;display:block;margin-top:.4rem;}
+.social-login{display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem;}
+.social-login-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.8rem;border-radius:10px;cursor:pointer;font-size:.9rem;font-family:var(--font);font-weight:500;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+.divider{text-align:center;color:var(--muted);font-size:.8rem;margin:1rem 0;position:relative;}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border);}
+.divider::before{left:0;}.divider::after{right:0;}
+
+/* ===DEALS=== */
+.deals-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;}
+.deal-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative;}
+.deal-badge{position:absolute;top:12px;left:12px;background:var(--red);color:#fff;font-size:.75rem;font-weight:700;padding:.3rem .7rem;border-radius:6px;}
+.deal-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:5rem;background:var(--bg3);}
+.deal-body{padding:1.2rem;}
+.deal-name{font-weight:700;margin-bottom:.3rem;}
+.deal-desc{font-size:.8rem;color:var(--muted);margin-bottom:.8rem;}
+.deal-footer{display:flex;align-items:center;justify-content:space-between;}
+.deal-price{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--yellow);}
+.deal-old{font-size:.85rem;color:var(--muted);text-decoration:line-through;}
+.coupon-input{display:flex;gap:.5rem;margin-top:1rem;}
+.coupon-input input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.6rem 1rem;border-radius:8px;font-family:var(--font);font-size:.85rem;}
+.coupon-input button{background:var(--orange);color:#fff;border:none;padding:.6rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;font-family:var(--font);}
+.timer{display:flex;gap:.5rem;margin-top:.8rem;}
+.timer-unit{background:var(--bg3);border-radius:6px;padding:.3rem .6rem;text-align:center;}
+.timer-num{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--red);}
+.timer-lbl{font-size:.6rem;color:var(--muted);text-transform:uppercase;}
+
+/* ===LOYALTY=== */
+.loyalty-card{background:linear-gradient(135deg,#B7791F,#92400E);border-radius:24px;padding:2rem;color:#fff;margin-bottom:2rem;position:relative;overflow:hidden;}
+.loyalty-card::before{content:'⭐';position:absolute;right:-10px;bottom:-20px;font-size:8rem;opacity:.1;}
+.loyalty-points{font-family:'Bebas Neue',sans-serif;font-size:4rem;line-height:1;}
+.loyalty-label{font-size:.85rem;opacity:.8;}
+
+/* ===AI CHATBOT=== */
+.chatbot-fab{position:fixed;bottom:2rem;right:2rem;width:60px;height:60px;background:linear-gradient(135deg,var(--red),var(--orange));border:none;border-radius:50%;cursor:pointer;font-size:1.6rem;z-index:1500;box-shadow:0 8px 30px rgba(230,51,41,.5);display:flex;align-items:center;justify-content:center;transition:transform .2s;}
+.chatbot-fab:hover{transform:scale(1.1);}
+.chatbot-window{position:fixed;bottom:5rem;right:2rem;width:350px;height:500px;background:var(--bg2);border:1px solid var(--border);border-radius:20px;z-index:1500;display:none;flex-direction:column;overflow:hidden;box-shadow:var(--shadow);}
+.chatbot-window.open{display:flex;}
+.chatbot-head{background:linear-gradient(135deg,var(--red),var(--orange));padding:1rem 1.2rem;display:flex;align-items:center;gap:.8rem;}
+.chatbot-head .bot-avatar{width:36px;height:36px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.chatbot-head .bot-name{color:#fff;font-weight:700;}
+.chatbot-head .bot-status{font-size:.75rem;color:rgba(255,255,255,.8);}
+.chatbot-head .close-chat{background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;margin-left:auto;}
+.chatbot-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.8rem;}
+.msg{max-width:80%;padding:.7rem 1rem;border-radius:12px;font-size:.85rem;line-height:1.5;}
+.msg.bot{background:var(--bg3);border-radius:12px 12px 12px 2px;align-self:flex-start;}
+.msg.user{background:var(--red);color:#fff;border-radius:12px 12px 2px 12px;align-self:flex-end;}
+.chatbot-input{padding:.8rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chatbot-input input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:.6rem .9rem;border-radius:8px;font-size:.85rem;font-family:var(--font);}
+.chatbot-input button{background:var(--red);color:#fff;border:none;width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:1rem;}
+
+/* ===NOTIFICATION TOAST=== */
+.toast{position:fixed;top:80px;right:1.5rem;background:var(--bg2);border:1px solid var(--border);border-left:4px solid var(--green);border-radius:12px;padding:1rem 1.2rem;max-width:300px;z-index:3000;transform:translateX(120%);transition:transform .3s;box-shadow:var(--shadow);}
+.toast.show{transform:translateX(0);}
+.toast-title{font-weight:700;font-size:.9rem;margin-bottom:.2rem;}
+.toast-msg{font-size:.8rem;color:var(--muted);}
+
+/* ===QR=== */
+.qr-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;text-align:center;max-width:400px;margin:2rem auto;}
+.qr-box{width:160px;height:160px;background:#fff;border-radius:12px;margin:1rem auto;display:flex;align-items:center;justify-content:center;font-size:5rem;}
+
+/* ===URDU=== */
+.urdu{font-family:'Noto Nastaliq Urdu',serif;direction:rtl;text-align:right;}
+
+/* ===RESPONSIVE=== */
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .mobile-menu-btn{display:flex;}
+  .hero-content{padding-left:1rem;}
+  #heroCanvas{width:280px;height:280px;}
+  .hero-3d{right:1rem;}
+  .checkout-grid{grid-template-columns:1fr;}
+  .contact-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .gallery-item:nth-child(3n+1){grid-column:span 1;grid-row:span 1;}
+}
+@media(max-width:600px){
+  .hero h1{font-size:4rem;}
+  .hero-3d{display:none;}
+  .footer-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="logo" onclick="showPage('home')">ZAIQA<span>.</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('menu')" id="nav-menu">Menu</a></li>
+    <li><a onclick="showPage('deals')" id="nav-deals">Deals</a></li>
+    <li><a onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('branches')" id="nav-branches">Branches</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+    <li><a onclick="showPage('login')" id="nav-login">Login</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="lang-btn" onclick="toggleLang()" id="langBtn">اردو</button>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">🌙</button>
+    <button class="cart-btn" onclick="openCart()">🛒 Cart <span class="cart-count" id="cartCount">0</span></button>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" style="display:none;position:fixed;top:70px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);z-index:999;padding:1rem;">
+  <div style="display:flex;flex-direction:column;gap:.5rem;">
+    <a onclick="showPage('home');toggleMobileMenu()" style="padding:.7rem 1rem;border-radius:8px;cursor:pointer;color:var(--text);text-decoration:none;font-weight:500;">🏠 Home</a>
+    <a onclick="showPage('menu');toggleMobileMenu()" style="padding:.7rem 1rem;border-radius:8px;cursor:pointer;color:var(--text);text-decoration:none;font-weight:500;">🍔 Menu</a>
+    <a onclick="showPage('deals');toggleMobileMenu()" style="padding:.7rem 1rem;border-radius:8px;cursor:pointer;color:var(--text);text-decoration:none;font-weight:500;">🔥 Deals</a>
+    <a onclick="showPage('gallery');toggleMobileMenu()" style="padding:.7rem 1rem;border-radius:8px;cursor:pointer;color:var(--text);text-decoration:none;font-weight:500;">📸 Gallery</a>
+    <a onclick="showPage('about');toggleMobileMenu()" style="padding:.7rem 1rem;border-radius:8px;cursor:pointer;color:var(--text);text-decoration:none;font-weight:500;">ℹ️ About</a>
+    <a onclick="showPage('branches');toggleMobileMenu()" style="padding:.7rem 1rem;border-radius:8px;cursor:pointer;color:var(--text);text-decoration:none;font-weight:500;">📍 Branches</a>
+    <a onclick="showPage('contact');toggleMobileMenu()" style="padding:.7rem 1rem;border-radius:8px;cursor:pointer;color:var(--text);text-decoration:none;font-weight:500;">📞 Contact</a>
+    <a onclick="showPage('login');toggleMobileMenu()" style="padding:.7rem 1rem;border-radius:8px;cursor:pointer;color:var(--text);text-decoration:none;font-weight:500;">👤 Login</a>
+  </div>
+</div>
+
+<!-- ============================== HOME PAGE ============================== -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag" id="heroTag">🔥 Pakistan's #1 Fast Food Brand</div>
+      <h1 id="heroTitle">TASTE THE<br>LEGEND</h1>
+      <p id="heroDesc">Fresh ingredients, bold flavors, and lightning-fast delivery. Every bite is an experience worth craving.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('menu')">🍔 Order Now</button>
+        <button class="btn-secondary" onclick="showPage('menu')">View Menu →</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-num">500K+</div><div class="hstat-lbl">Happy Customers</div></div>
+        <div class="hstat"><div class="hstat-num">25+</div><div class="hstat-lbl">Branches</div></div>
+        <div class="hstat"><div class="hstat-num">4.9★</div><div class="hstat-lbl">Rating</div></div>
+      </div>
+    </div>
+    <div class="hero-3d"><canvas id="heroCanvas"></canvas></div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="section" style="background:var(--bg2);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">⭐ Customer Favorites</div>
+        <h2 class="section-title" id="featuredTitle">FEATURED PRODUCTS</h2>
+      </div>
+      <div class="products-grid" id="featuredGrid"></div>
+    </div>
+  </section>
+
+  <!-- SPECIAL OFFERS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">🔥 Hot Deals</div>
+        <h2 class="section-title">SPECIAL OFFERS</h2>
+      </div>
+      <div class="offers-grid">
+        <div class="offer-card red" onclick="showPage('deals')">
+          <div class="offer-emoji">🍔</div>
+          <div class="offer-tag">TODAY ONLY</div>
+          <div class="offer-title">BUY 1<br>GET 1 FREE</div>
+          <div class="offer-desc">On all Zaiqa Burgers. Valid till midnight tonight.</div>
+          <button class="offer-btn">Grab Deal →</button>
+        </div>
+        <div class="offer-card orange" onclick="showPage('deals')">
+          <div class="offer-emoji">🍕</div>
+          <div class="offer-tag">COMBO DEAL</div>
+          <div class="offer-title">PIZZA +<br>FRIES + DRINK</div>
+          <div class="offer-desc">Family combo at jaw-dropping price. Rs. 999 only.</div>
+          <button class="offer-btn">Order Now →</button>
+        </div>
+        <div class="offer-card yellow" onclick="showPage('deals')">
+          <div class="offer-emoji">🌯</div>
+          <div class="offer-tag">WEEKEND SPECIAL</div>
+          <div class="offer-title">FREE<br>DELIVERY</div>
+          <div class="offer-desc">Free delivery on all orders above Rs. 500 this weekend.</div>
+          <button class="offer-btn">Order Free →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section" style="background:var(--bg2);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">💬 What People Say</div>
+        <h2 class="section-title">CUSTOMER REVIEWS</h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"Best burger I've ever had in Lahore! The sauce is absolutely magical. Will definitely order again and again."</div>
+          <div class="review-author"><div class="review-avatar">👨</div><div><div class="review-name">Ahmed Raza</div><div class="review-loc">📍 Lahore</div></div></div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"Delivery was super fast! Food was hot and fresh. The Zaiqa Special Shawarma is absolutely incredible!"</div>
+          <div class="review-author"><div class="review-avatar">👩</div><div><div class="review-name">Fatima Khan</div><div class="review-loc">📍 Karachi</div></div></div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <div class="review-text">"Their loyalty points program is amazing! I saved so much money. The pizza crust is perfectly crispy every time."</div>
+          <div class="review-author"><div class="review-avatar">🧑</div><div><div class="review-name">Umar Farooq</div><div class="review-loc">📍 Islamabad</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP DOWNLOAD -->
+  <section class="section">
+    <div class="container">
+      <div class="app-section">
+        <div class="app-text">
+          <div class="section-tag">📱 Download Now</div>
+          <div class="app-title">GET THE ZAIQA APP</div>
+          <div class="app-desc">Order faster, track live, earn loyalty points, and get exclusive app-only deals. Your food, just one tap away.</div>
+          <div class="app-btns">
+            <div class="app-store-btn"><span class="icon">🍎</span><div class="txt"><small>Download on</small><strong>App Store</strong></div></div>
+            <div class="app-store-btn"><span class="icon">🤖</span><div class="txt"><small>Get it on</small><strong>Google Play</strong></div></div>
+          </div>
+        </div>
+        <div class="app-mockup">📱</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">ZAIQA<span>.</span></div>
+          <p>Pakistan's most loved fast food brand. Fresh ingredients, bold flavors, and lightning-fast delivery since 2015.</p>
+          <div class="footer-social">
+            <button class="social-btn">📘</button>
+            <button class="social-btn">📸</button>
+            <button class="social-btn">🐦</button>
+            <button class="social-btn">▶️</button>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a onclick="showPage('home')">Home</a></li>
+            <li><a onclick="showPage('menu')">Menu</a></li>
+            <li><a onclick="showPage('deals')">Deals</a></li>
+            <li><a onclick="showPage('about')">About Us</a></li>
+            <li><a onclick="showPage('branches')">Branches</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a onclick="showPage('contact')">Contact Us</a></li>
+            <li><a>FAQ</a></li>
+            <li><a>Track Order</a></li>
+            <li><a>Privacy Policy</a></li>
+            <li><a>Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Newsletter</h4>
+          <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;">Get exclusive deals in your inbox.</p>
+          <div class="newsletter">
+            <input type="email" placeholder="Your email"/>
+            <button onclick="showToast('🎉 Subscribed!','You will get exclusive deals!')">→</button>
+          </div>
+          <div style="margin-top:1.5rem;">
+            <div style="font-size:.8rem;color:var(--muted);margin-bottom:.5rem;">🏆 Loyalty Points: <strong style="color:var(--yellow)">1,250 pts</strong></div>
+            <div style="font-size:.8rem;color:var(--muted);">📦 Order History: <a onclick="showPage('tracking')" style="color:var(--red);cursor:pointer">View →</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Zaiqa Foods Pvt. Ltd. All rights reserved. Made with ❤️ in Pakistan 🇵🇰</p>
+        <p>🔒 Secure Payments | 🚀 Fast Delivery | ⭐ 4.9 Rating</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================== MENU PAGE ============================== -->
+<div class="page" id="page-menu">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">🍽️ Our Menu</div>
+        <h2 class="section-title" id="menuTitle">FULL MENU</h2>
+      </div>
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" id="menuSearch" placeholder="Search food items..." oninput="filterMenu()"/>
+      </div>
+      <div class="menu-filters">
+        <button class="filter-btn active" onclick="filterCat('all',this)">🍽️ All</button>
+        <button class="filter-btn" onclick="filterCat('burger',this)">🍔 Burgers</button>
+        <button class="filter-btn" onclick="filterCat('pizza',this)">🍕 Pizza</button>
+        <button class="filter-btn" onclick="filterCat('shawarma',this)">🌯 Shawarma</button>
+        <button class="filter-btn" onclick="filterCat('fries',this)">🍟 Fries</button>
+        <button class="filter-btn" onclick="filterCat('drinks',this)">🥤 Drinks</button>
+        <button class="filter-btn" onclick="filterCat('dessert',this)">🍦 Desserts</button>
+      </div>
+      <div class="products-grid" id="menuGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== DEALS PAGE ============================== -->
+<div class="page" id="page-deals">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">🔥 Hot Deals</div>
+        <h2 class="section-title">DEALS & OFFERS</h2>
+      </div>
+      <!-- Coupon -->
+      <div style="background:var(--bg2);border:1px dashed var(--orange);border-radius:var(--radius);padding:1.5rem;margin-bottom:2rem;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:.5rem;">🎟️</div>
+        <div style="font-weight:700;margin-bottom:.3rem;">Have a Coupon Code?</div>
+        <div class="coupon-input" style="max-width:400px;margin:0 auto;">
+          <input type="text" id="couponInput" placeholder="Enter coupon code (e.g. ZAIQA50)"/>
+          <button onclick="applyCoupon()">Apply</button>
+        </div>
+      </div>
+      <div class="deals-grid" id="dealsGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== GALLERY PAGE ============================== -->
+<div class="page" id="page-gallery">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">📸 Visual Feast</div>
+        <h2 class="section-title">OUR GALLERY</h2>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== ABOUT PAGE ============================== -->
+<div class="page" id="page-about">
+  <section class="section">
+    <div class="container">
+      <div class="about-hero">
+        <div class="section-tag">🏆 Our Story</div>
+        <h2 class="section-title">ABOUT ZAIQA</h2>
+        <p style="color:var(--muted);max-width:600px;margin:.8rem auto 0;line-height:1.7;">Founded in 2015 in the heart of Lahore, Zaiqa started as a small food cart with a big dream — to bring restaurant-quality fast food to every Pakistani. Today, we proudly serve 500,000+ happy customers across 25+ branches nationwide.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:3rem;">
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;">
+          <div style="font-size:2rem;margin-bottom:1rem;">🎯</div>
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:.8rem;color:var(--yellow);">OUR MISSION</h3>
+          <p style="color:var(--muted);line-height:1.7;font-size:.9rem;">To deliver the freshest, tastiest fast food with unmatched speed and service, making every meal a celebration of Pakistani flavor and hospitality.</p>
+        </div>
+        <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;">
+          <div style="font-size:2rem;margin-bottom:1rem;">🌟</div>
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;margin-bottom:.8rem;color:var(--yellow);">OUR VISION</h3>
+          <p style="color:var(--muted);line-height:1.7;font-size:.9rem;">To become South Asia's most beloved fast food brand by 2030, expanding to 100+ branches while maintaining the homemade taste that made us famous.</p>
+        </div>
+      </div>
+      <div class="section-head">
+        <div class="section-tag">👥 Meet The Team</div>
+        <h2 class="section-title">OUR TEAM</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-avatar">👨‍🍳</div><div class="team-name">Chef Imran Ali</div><div class="team-role">Head Chef & Founder</div></div>
+        <div class="team-card"><div class="team-avatar">👩‍💼</div><div class="team-name">Sara Malik</div><div class="team-role">CEO & Co-Founder</div></div>
+        <div class="team-card"><div class="team-avatar">👨‍💻</div><div class="team-name">Bilal Ahmed</div><div class="team-role">CTO</div></div>
+        <div class="team-card"><div class="team-avatar">👩‍🎨</div><div class="team-name">Nadia Khan</div><div class="team-role">Head of Marketing</div></div>
+        <div class="team-card"><div class="team-avatar">👨‍🔬</div><div class="team-name">Dr. Hassan</div><div class="team-role">Quality Assurance</div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== BRANCHES PAGE ============================== -->
+<div class="page" id="page-branches">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">📍 Find Us</div>
+        <h2 class="section-title">OUR BRANCHES</h2>
+      </div>
+      <div class="branches-grid" id="branchesGrid"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== CONTACT PAGE ============================== -->
+<div class="page" id="page-contact">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">📞 Get In Touch</div>
+        <h2 class="section-title">CONTACT US</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-label">Phone</div><div class="contact-val">+92 42 111-ZAIQA</div></div></div>
+          <div class="contact-item"><div class="contact-icon">📧</div><div><div class="contact-label">Email</div><div class="contact-val">hello@zaiqa.pk</div></div></div>
+          <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-label">Head Office</div><div class="contact-val">123 Food Street, Gulberg, Lahore</div></div></div>
+          <div class="contact-item"><div class="contact-icon">⏰</div><div><div class="contact-label">Hours</div><div class="contact-val">Open Daily: 10am – 2am</div></div></div>
+          <button class="whatsapp-btn" onclick="showToast('📱 WhatsApp!','Connecting you to WhatsApp...')">💬 Chat on WhatsApp</button>
+          <!-- QR -->
+          <div class="qr-section">
+            <div style="font-weight:700;margin-bottom:.5rem;">📱 Scan to Order</div>
+            <div style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;">Scan our QR code to open the menu instantly</div>
+            <div class="qr-box">🍔</div>
+            <div style="font-size:.75rem;color:var(--muted);">menu.zaiqa.pk</div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3>Send Us a Message</h3>
+          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Ahmed Raza"/></div>
+          <div class="form-group"><label>Email Address</label><input type="email" placeholder="ahmed@example.com"/></div>
+          <div class="form-group"><label>Subject</label><select><option>General Inquiry</option><option>Order Issue</option><option>Feedback</option><option>Partnership</option></select></div>
+          <div class="form-group"><label>Message</label><textarea rows="4" placeholder="Write your message..."></textarea></div>
+          <button class="btn-primary" style="width:100%;justify-content:center;" onclick="showToast('✅ Message Sent!','We will reply within 24 hours.')">Send Message 📨</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== LOGIN PAGE ============================== -->
+<div class="page" id="page-login">
+  <section class="section">
+    <div class="container">
+      <div class="auth-card">
+        <div style="text-align:center;margin-bottom:1.5rem;">
+          <div class="logo" style="font-size:2.5rem;display:block;margin-bottom:.3rem;">ZAIQA<span>.</span></div>
+          <p style="color:var(--muted);font-size:.85rem;">Welcome back! Sign in to your account</p>
+        </div>
+        <div class="auth-tabs">
+          <button class="auth-tab active" onclick="switchAuth('login',this)">Login</button>
+          <button class="auth-tab" onclick="switchAuth('signup',this)">Sign Up</button>
+        </div>
+        <div id="authLogin">
+          <div class="form-group"><label>Email / Phone</label><input type="text" placeholder="Enter email or phone number"/></div>
+          <div class="form-group"><label>Password</label><div class="eye-wrap"><input type="password" placeholder="Enter password" id="passLogin"/><button class="eye-btn" onclick="togglePass('passLogin')">👁️</button></div><a class="forgot-link">Forgot Password?</a></div>
+          <button class="btn-primary" style="width:100%;margin-top:1rem;" onclick="doLogin()">Login to Account 🚀</button>
+          <div class="divider">or continue with</div>
+          <div class="social-login">
+            <button class="social-login-btn" onclick="showToast('🔗 Connecting','Logging in with Google...')">🔍 Continue with Google</button>
+            <button class="social-login-btn" onclick="showToast('🔗 Connecting','Logging in with Facebook...')">📘 Continue with Facebook</button>
+          </div>
+        </div>
+        <div id="authSignup" style="display:none;">
+          <div class="form-row">
+            <div class="form-group"><label>First Name</label><input type="text" placeholder="Ahmed"/></div>
+            <div class="form-group"><label>Last Name</label><input type="text" placeholder="Raza"/></div>
+          </div>
+          <div class="form-group"><label>Email</label><input type="email" placeholder="ahmed@example.com"/></div>
+          <div class="form-group"><label>Phone</label><input type="tel" placeholder="+92 300 1234567"/></div>
+          <div class="form-group"><label>Password</label><div class="eye-wrap"><input type="password" placeholder="Create password" id="passSignup"/><button class="eye-btn" onclick="togglePass('passSignup')">👁️</button></div></div>
+          <button class="btn-primary" style="width:100%;margin-top:1rem;" onclick="doSignup()">Create Account 🎉</button>
+        </div>
+        <!-- Loyalty Points Preview -->
+        <div class="loyalty-card" style="margin-top:1.5rem;">
+          <div style="font-size:.8rem;opacity:.8;margin-bottom:.3rem;">🏆 Your Loyalty Points</div>
+          <div class="loyalty-points">1,250</div>
+          <div class="loyalty-label">Points = Rs. 125 discount on next order</div>
+          <div style="margin-top:1rem;font-size:.8rem;opacity:.7;">Refer a friend → Earn 200 bonus points!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== CHECKOUT PAGE ============================== -->
+<div class="page" id="page-checkout">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">🛒 Checkout</div>
+        <h2 class="section-title">COMPLETE ORDER</h2>
+      </div>
+      <div class="checkout-grid">
+        <div>
+          <div class="form-section" style="margin-bottom:1.5rem;">
+            <h3>📍 Delivery Address</h3>
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Ahmed Raza"/></div>
+            <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+92 300 1234567"/></div>
+            <div class="form-group"><label>City</label><select><option>Lahore</option><option>Karachi</option><option>Islamabad</option><option>Rawalpindi</option><option>Faisalabad</option></select></div>
+            <div class="form-group"><label>Full Address</label><textarea rows="2" placeholder="House No., Street, Area..."></textarea></div>
+            <div class="form-group"><label>Delivery Notes (optional)</label><input type="text" placeholder="Ring doorbell twice..."/></div>
+          </div>
+          <div class="form-section">
+            <h3>💳 Payment Method</h3>
+            <div class="payment-methods">
+              <div class="payment-opt selected" onclick="selectPay(this)"><div class="pay-icon">💵</div><div><div class="pay-name">Cash on Delivery</div><div style="font-size:.75rem;color:var(--muted);">Pay when your order arrives</div></div></div>
+              <div class="payment-opt" onclick="selectPay(this)"><div class="pay-icon">📱</div><div><div class="pay-name">JazzCash</div><div style="font-size:.75rem;color:var(--muted);">Mobile wallet payment</div></div></div>
+              <div class="payment-opt" onclick="selectPay(this)"><div class="pay-icon">🏦</div><div><div class="pay-name">EasyPaisa</div><div style="font-size:.75rem;color:var(--muted);">Pay via EasyPaisa account</div></div></div>
+              <div class="payment-opt" onclick="selectPay(this)"><div class="pay-icon">💳</div><div><div class="pay-name">Credit/Debit Card</div><div style="font-size:.75rem;color:var(--muted);">Visa, Mastercard accepted</div></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="order-summary-box">
+          <h3 style="font-weight:700;margin-bottom:1rem;font-size:1.05rem;">🧾 Order Summary</h3>
+          <div id="checkoutItems" style="margin-bottom:1rem;display:flex;flex-direction:column;gap:.6rem;"></div>
+          <div style="border-top:1px solid var(--border);padding-top:1rem;display:flex;flex-direction:column;gap:.5rem;">
+            <div style="display:flex;justify-content:space-between;font-size:.85rem;"><span style="color:var(--muted)">Subtotal</span><span id="subtotalAmt">Rs. 0</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:.85rem;"><span style="color:var(--muted)">Delivery</span><span style="color:var(--green)">FREE</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:.85rem;"><span style="color:var(--muted)">Tax (5%)</span><span id="taxAmt">Rs. 0</span></div>
+            <div style="display:flex;justify-content:space-between;font-weight:700;font-size:1rem;padding-top:.5rem;border-top:1px solid var(--border);"><span>Total</span><span style="color:var(--yellow)" id="totalAmt">Rs. 0</span></div>
+          </div>
+          <div style="margin-top:1rem;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:.8rem;font-size:.8rem;color:var(--green);">🏆 You'll earn <strong id="earnPoints">0</strong> loyalty points!</div>
+          <button class="checkout-btn" style="margin-top:1rem;" onclick="placeOrder()">🚀 Place Order</button>
+          <button class="btn-secondary" style="width:100%;margin-top:.5rem;" onclick="showPage('menu')">← Add More Items</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== ORDER TRACKING ============================== -->
+<div class="page" id="page-tracking">
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">🚀 Live Tracking</div>
+        <h2 class="section-title">ORDER TRACKING</h2>
+      </div>
+      <div class="track-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+          <div><div style="font-weight:700;font-size:1.05rem;">Order #ZQ-20250608</div><div style="font-size:.8rem;color:var(--muted);">Placed: Today at 7:30 PM</div></div>
+          <div style="background:rgba(249,115,22,.15);color:var(--orange);padding:.4rem .9rem;border-radius:50px;font-size:.8rem;font-weight:600;">In Progress</div>
+        </div>
+        <div class="track-steps">
+          <div class="track-step done"><div class="step-icon">✅</div><div><div class="step-name">Order Confirmed</div><div class="step-time">7:30 PM — Kitchen received your order</div></div></div>
+          <div class="track-step done"><div class="step-icon">👨‍🍳</div><div><div class="step-name">Being Prepared</div><div class="step-time">7:35 PM — Chef is cooking your food</div></div></div>
+          <div class="track-step active"><div class="step-icon">📦</div><div><div class="step-name">Ready for Pickup</div><div class="step-time">Estimated: 7:55 PM</div></div></div>
+          <div class="track-step"><div class="step-icon">🛵</div><div><div class="step-name">Out for Delivery</div><div class="step-time">Rider on the way to you</div></div></div>
+          <div class="track-step"><div class="step-icon">🏠</div><div><div class="step-name">Delivered!</div><div class="step-time">Enjoy your meal!</div></div></div>
+        </div>
+        <div class="track-eta">
+          <div><div class="eta-label">Estimated Arrival</div><div class="eta-time" id="etaTime">25 MIN</div></div>
+          <div style="text-align:right;"><div class="eta-label">Delivery Agent</div><div style="font-weight:600;">🛵 Ali Bhai</div><div style="font-size:.8rem;color:var(--green);">★ 4.8 Rating</div></div>
+        </div>
+        <button class="btn-primary" style="width:100%;margin-top:1.5rem;" onclick="showToast('📱 Calling...','Connecting to Ali Bhai')">📞 Call Rider</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================== CART SIDEBAR ============================== -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>🛒 Your Cart</h3>
+    <button class="close-btn" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-total"><span>Total:</span><span id="cartTotal">Rs. 0</span></div>
+    <button class="checkout-btn" onclick="goCheckout()">Proceed to Checkout 🚀</button>
+  </div>
+</div>
+
+<!-- ============================== AI CHATBOT ============================== -->
+<button class="chatbot-fab" onclick="toggleChat()" title="AI Food Assistant">🤖</button>
+<div class="chatbot-window" id="chatWindow">
+  <div class="chatbot-head">
+    <div class="bot-avatar">🤖</div>
+    <div><div class="bot-name">Zaiqa AI</div><div class="bot-status">● Online — Ask me anything!</div></div>
+    <button class="close-chat" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chatbot-msgs" id="chatMsgs">
+    <div class="msg bot">👋 Asslamu Alaikum! Main Zaiqa AI hoon. Aap kya order karna chahte hain? Koi bhi sawal poochein! 😊</div>
+  </div>
+  <div class="chatbot-input">
+    <input type="text" id="chatInput" placeholder="Type your message..." onkeydown="if(event.key==='Enter')sendChat()"/>
+    <button onclick="sendChat()">➤</button>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast" id="toast">
+  <div class="toast-title" id="toastTitle"></div>
+  <div class="toast-msg" id="toastMsg"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ======== DATA ========
+const menuData = [
+  {id:1,name:'Zaiqa Classic Burger',cat:'burger',emoji:'🍔',price:450,old:600,desc:'Double beef patty, special sauce, fresh veggies',badge:'Best Seller'},
+  {id:2,name:'Spicy Chicken Burger',cat:'burger',emoji:'🍔',price:399,old:500,desc:'Crispy chicken, jalapeño mayo, coleslaw',badge:'Spicy 🌶️'},
+  {id:3,name:'BBQ Smash Burger',cat:'burger',emoji:'🍔',price:550,old:699,desc:'Smashed beef, caramelized onions, BBQ sauce',badge:null},
+  {id:4,name:'Zaiqa Special Pizza',cat:'pizza',emoji:'🍕',price:799,old:1000,desc:'Loaded toppings, hand-stretched dough',badge:'Chef\'s Pick'},
+  {id:5,name:'Chicken Tikka Pizza',cat:'pizza',emoji:'🍕',price:899,old:1100,desc:'Pakistani spiced chicken, desi flavors',badge:'Desi'},
+  {id:6,name:'BBQ Chicken Pizza',cat:'pizza',emoji:'🍕',price:849,old:999,desc:'Smoky BBQ sauce, grilled chicken',badge:null},
+  {id:7,name:'Zaiqa Shawarma',cat:'shawarma',emoji:'🌯',price:299,old:399,desc:'Juicy chicken, garlic sauce, fresh veggies',badge:'Top Rated'},
+  {id:8,name:'Turkish Shawarma',cat:'shawarma',emoji:'🌯',price:349,old:450,desc:'Middle Eastern spices, tahini sauce',badge:null},
+  {id:9,name:'Loaded Fries',cat:'fries',emoji:'🍟',price:249,old:350,desc:'Crispy fries with cheese sauce & toppings',badge:'Loaded'},
+  {id:10,name:'Masala Fries',cat:'fries',emoji:'🍟',price:199,old:280,desc:'Desi spiced crispy fries, chutney dip',badge:null},
+  {id:11,name:'Zaiqa Special Shake',cat:'drinks',emoji:'🥤',price:249,old:320,desc:'Thick creamy milkshake, 5 flavors',badge:'New'},
+  {id:12,name:'Fresh Lemonade',cat:'drinks',emoji:'🍋',price:149,old:199,desc:'Freshly squeezed with mint & ice',badge:null},
+  {id:13,name:'Chocolate Lava Cake',cat:'dessert',emoji:'🍫',price:349,old:450,desc:'Warm molten chocolate center',badge:'Must Try'},
+  {id:14,name:'Ice Cream Sundae',cat:'dessert',emoji:'🍨',price:249,old:320,desc:'3 scoops with toppings & sauce',badge:null},
+];
+
+const dealsData = [
+  {name:'Family Combo Deal',emoji:'🎉',price:1499,old:2200,desc:'2 Burgers + 1 Pizza + 4 Fries + 4 Drinks',badge:'Save 32%'},
+  {name:'Burger Bonanza',emoji:'🍔',price:799,old:1200,desc:'3 Classic Burgers at insane price',badge:'Today Only'},
+  {name:'Pizza Party Box',emoji:'🍕',price:1999,old:2800,desc:'2 Large Pizzas + 2 Garlic Breads + 2 Drinks',badge:'Weekend'},
+  {name:'Student Special',emoji:'🎓',price:399,old:600,desc:'Burger + Fries + Drink. Show student ID.',badge:'50% OFF'},
+  {name:'Midnight Munchies',emoji:'🌙',price:599,old:900,desc:'Valid 10pm–2am. 2 Items + Drink combo.',badge:'Late Night'},
+  {name:'Shawarma Feast',emoji:'🌯',price:699,old:1000,desc:'3 Shawarmas + 2 Drinks + Garlic Sauce',badge:'Feast'},
+];
+
+const branchData = [
+  {name:'Gulberg Branch',area:'Lahore',addr:'12-MM Alam Road, Gulberg III',phone:'+92 42 111-001',hours:'10am – 2am'},
+  {name:'DHA Branch',area:'Lahore',addr:'Commercial Area, Phase 5 DHA',phone:'+92 42 111-002',hours:'11am – 2am'},
+  {name:'Clifton Branch',area:'Karachi',addr:'Block 5, Clifton Main Blvd',phone:'+92 21 111-003',hours:'10am – 3am'},
+  {name:'F-7 Branch',area:'Islamabad',addr:'Super Market, F-7 Markaz',phone:'+92 51 111-004',hours:'11am – 1am'},
+  {name:'Blue Area',area:'Islamabad',addr:'Jinnah Avenue, Blue Area',phone:'+92 51 111-005',hours:'10am – 2am'},
+  {name:'Faisalabad Main',area:'Faisalabad',addr:'Susan Road, Near D-Ground',phone:'+92 41 111-006',hours:'10am – 1am'},
+];
+
+const galleryData = [
+  {emoji:'🍔',label:'Signature Burger'},
+  {emoji:'🍕',label:'Fresh Pizza'},
+  {emoji:'🌯',label:'Chicken Shawarma'},
+  {emoji:'🍟',label:'Loaded Fries'},
+  {emoji:'🥤',label:'Milkshakes'},
+  {emoji:'🍦',label:'Ice Cream'},
+  {emoji:'👨‍🍳',label:'Our Kitchen'},
+  {emoji:'🏪',label:'Restaurant View'},
+  {emoji:'🎉',label:'Events'},
+];
+
+// ======== CART ========
+let cart = [];
+function addToCart(item){
+  const ex = cart.find(c=>c.id===item.id);
+  if(ex) ex.qty++;
+  else cart.push({...item,qty:1});
+  updateCart();
+  showToast('✅ Added!',item.name+' added to cart');
+}
+function updateCart(){
+  const count = cart.reduce((a,c)=>a+c.qty,0);
+  document.getElementById('cartCount').textContent = count;
+  renderCartItems();
+  renderCheckout();
+}
+function renderCartItems(){
+  const el = document.getElementById('cartItems');
+  if(!cart.length){el.innerHTML='<div style="text-align:center;color:var(--muted);padding:2rem;">🛒 Your cart is empty</div>';return;}
+  el.innerHTML = cart.map(item=>`
+    <div class="cart-item">
+      <div class="cart-item-emoji">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">Rs. ${item.price*item.qty}</div>
+      </div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+        <span class="qty-num">${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+      </div>
+    </div>
+  `).join('');
+  const total = cart.reduce((a,c)=>a+c.price*c.qty,0);
+  document.getElementById('cartTotal').textContent = 'Rs. '+total;
+}
+function changeQty(id,delta){
+  const idx = cart.findIndex(c=>c.id===id);
+  if(idx===-1) return;
+  cart[idx].qty += delta;
+  if(cart[idx].qty<=0) cart.splice(idx,1);
+  updateCart();
+}
+function openCart(){document.getElementById('cartOverlay').classList.add('open');document.getElementById('cartSidebar').classList.add('open');}
+function closeCart(){document.getElementById('cartOverlay').classList.remove('open');document.getElementById('cartSidebar').classList.remove('open');}
+function goCheckout(){closeCart();showPage('checkout');}
+function renderCheckout(){
+  const el = document.getElementById('checkoutItems');
+  if(!el) return;
+  el.innerHTML = cart.map(i=>`<div style="display:flex;justify-content:space-between;font-size:.85rem;"><span>${i.emoji} ${i.name} ×${i.qty}</span><span style="color:var(--yellow)">Rs. ${i.price*i.qty}</span></div>`).join('');
+  const sub = cart.reduce((a,c)=>a+c.price*c.qty,0);
+  const tax = Math.round(sub*.05);
+  const total = sub+tax;
+  document.getElementById('subtotalAmt').textContent='Rs. '+sub;
+  document.getElementById('taxAmt').textContent='Rs. '+tax;
+  document.getElementById('totalAmt').textContent='Rs. '+total;
+  document.getElementById('earnPoints').textContent=Math.round(total/10);
+}
+
+// ======== RENDER ========
+function renderProducts(container, data){
+  const el = document.getElementById(container);
+  el.innerHTML = data.map(item=>`
+    <div class="product-card">
+      <div class="product-img">${item.emoji}${item.badge?`<div class="product-badge">${item.badge}</div>`:''}</div>
+      <div class="product-body">
+        <div class="product-name">${item.name}</div>
+        <div class="product-desc">${item.desc}</div>
+        <div class="product-footer">
+          <div class="product-price"><span>Rs. ${item.old}</span>Rs. ${item.price}</div>
+          <button class="add-btn" onclick='addToCart(${JSON.stringify(item)})'>+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderDeals(){
+  const el = document.getElementById('dealsGrid');
+  const now = new Date();
+  el.innerHTML = dealsData.map((d,i)=>`
+    <div class="deal-card">
+      <div class="deal-badge">${d.badge}</div>
+      <div class="deal-img">${d.emoji}</div>
+      <div class="deal-body">
+        <div class="deal-name">${d.name}</div>
+        <div class="deal-desc">${d.desc}</div>
+        <div class="timer">
+          <div class="timer-unit"><div class="timer-num" id="dh${i}">05</div><div class="timer-lbl">HRS</div></div>
+          <div class="timer-unit"><div class="timer-num" id="dm${i}">30</div><div class="timer-lbl">MIN</div></div>
+          <div class="timer-unit"><div class="timer-num" id="ds${i}">${String(i*7%60).padStart(2,'0')}</div><div class="timer-lbl">SEC</div></div>
+        </div>
+        <div class="deal-footer">
+          <div><div class="deal-price">Rs. ${d.price}</div><div class="deal-old">Rs. ${d.old}</div></div>
+          <button class="add-btn" onclick='addToCart({id:${100+i},name:"${d.name}",emoji:"${d.emoji}",price:${d.price}})'>+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  startTimers();
+}
+
+let timerInterval;
+function startTimers(){
+  clearInterval(timerInterval);
+  let secs = [53,27,41,18,35,9];
+  let mins = [30,45,12,55,22,48];
+  let hrs  = [5,3,7,2,8,1];
+  timerInterval = setInterval(()=>{
+    dealsData.forEach((_,i)=>{
+      secs[i]--;
+      if(secs[i]<0){secs[i]=59;mins[i]--;}
+      if(mins[i]<0){mins[i]=59;hrs[i]--;}
+      if(hrs[i]<0){hrs[i]=0;mins[i]=0;secs[i]=0;}
+      const dh=document.getElementById('dh'+i);
+      const dm=document.getElementById('dm'+i);
+      const ds=document.getElementById('ds'+i);
+      if(dh)dh.textContent=String(hrs[i]).padStart(2,'0');
+      if(dm)dm.textContent=String(mins[i]).padStart(2,'0');
+      if(ds)ds.textContent=String(secs[i]).padStart(2,'0');
+    });
+  },1000);
+}
+
+function renderBranches(){
+  const el = document.getElementById('branchesGrid');
+  const mapEmojis=['🗺️','📍','🏙️','🌆','🏛️','🌇'];
+  el.innerHTML = branchData.map((b,i)=>`
+    <div class="branch-card">
+      <div class="branch-map" style="font-size:4rem;">${mapEmojis[i]}</div>
+      <div class="branch-info">
+        <div class="branch-name">${b.name}</div>
+        <div class="branch-detail">📍 ${b.addr}</div>
+        <div class="branch-detail">📞 ${b.phone}</div>
+        <div class="branch-detail">⏰ ${b.hours}</div>
+        <div style="margin-top:.8rem;font-size:.8rem;"><span class="branch-status"></span><span style="color:var(--green);font-weight:600;">Open Now</span></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderGallery(){
+  const el = document.getElementById('galleryGrid');
+  el.innerHTML = galleryData.map(g=>`
+    <div class="gallery-item">
+      <div class="gallery-img">${g.emoji}</div>
+      <div class="gallery-overlay"><span>📷 ${g.label}</span></div>
+    </div>
+  `).join('');
+}
+
+// ======== FILTER ========
+let currentCat = 'all';
+function filterCat(cat, btn){
+  currentCat = cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  filterMenu();
+}
+function filterMenu(){
+  const q = document.getElementById('menuSearch')?.value?.toLowerCase()||'';
+  const filtered = menuData.filter(i=>(currentCat==='all'||i.cat===currentCat)&&(i.name.toLowerCase().includes(q)||i.desc.toLowerCase().includes(q)));
+  renderProducts('menuGrid',filtered);
+}
+
+// ======== PAGE ROUTING ========
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>{a.classList.remove('active');if(a.id==='nav-'+id)a.classList.add('active');});
+  window.scrollTo(0,0);
+  if(id==='deals') renderDeals();
+  if(id==='checkout') renderCheckout();
+}
+
+// ======== AUTH ========
+function switchAuth(type, btn){
+  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('authLogin').style.display = type==='login'?'block':'none';
+  document.getElementById('authSignup').style.display = type==='signup'?'block':'none';
+}
+function togglePass(id){const el=document.getElementById(id);el.type=el.type==='password'?'text':'password';}
+function doLogin(){showToast('🎉 Welcome Back!','Login successful!');setTimeout(()=>showPage('home'),1000);}
+function doSignup(){showToast('🎉 Account Created!','Welcome to Zaiqa Family!');setTimeout(()=>showPage('home'),1000);}
+
+// ======== PAYMENT ========
+function selectPay(el){document.querySelectorAll('.payment-opt').forEach(p=>p.classList.remove('selected'));el.classList.add('selected');}
+function placeOrder(){
+  if(!cart.length){showToast('⚠️ Empty Cart','Please add items to cart first!');return;}
+  cart=[];updateCart();
+  showToast('🎉 Order Placed!','Your order is being prepared!');
+  setTimeout(()=>showPage('tracking'),1500);
+}
+
+// ======== THEME ========
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('themeBtn').textContent=isDark?'🌙':'☀️';
+}
+
+// ======== LANGUAGE ========
+let isUrdu=false;
+function toggleLang(){
+  isUrdu=!isUrdu;
+  document.getElementById('langBtn').textContent=isUrdu?'English':'اردو';
+  document.getElementById('heroTag').textContent=isUrdu?'🔥 پاکستان کا نمبر 1 فاسٹ فوڈ برانڈ':'🔥 Pakistan\'s #1 Fast Food Brand';
+  document.getElementById('heroTitle').innerHTML=isUrdu?'ذائقہ<br>لیجنڈ':'TASTE THE<br>LEGEND';
+  document.getElementById('heroDesc').textContent=isUrdu?'تازہ اجزاء، شاندار ذائقے، اور تیز ترین ڈیلیوری۔ ہر نوالہ ایک یادگار تجربہ ہے۔':'Fresh ingredients, bold flavors, and lightning-fast delivery. Every bite is an experience worth craving.';
+  if(isUrdu){document.getElementById('heroTitle').classList.add('urdu');}else{document.getElementById('heroTitle').classList.remove('urdu');}
+}
+
+// ======== TOAST ========
+function showToast(title,msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastTitle').textContent=title;
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3500);
+}
+
+// ======== COUPON ========
+function applyCoupon(){
+  const v=document.getElementById('couponInput').value.toUpperCase();
+  const codes={'ZAIQA50':'50% OFF applied!','WELCOME':'15% OFF for new users!','LAHORE':'Free delivery + 10% OFF!'};
+  showToast(codes[v]?'🎟️ Coupon Applied!':'❌ Invalid Code',codes[v]||'Try: ZAIQA50, WELCOME, LAHORE');
+  if(codes[v])document.getElementById('couponInput').style.borderColor='var(--green)';
+}
+
+// ======== CHATBOT ========
+let chatOpen=false;
+function toggleChat(){chatOpen=!chatOpen;document.getElementById('chatWindow').classList.toggle('open',chatOpen);}
+const botReplies={
+  'burger':['We have 3 amazing burgers! Classic, Spicy Chicken & BBQ Smash. All starting from Rs. 399!🍔','Burgers are our specialty! Want me to add one to your cart?'],
+  'pizza':['Our Zaiqa Special Pizza is the #1 choice! Hand-stretched dough, loaded toppings. Rs. 799 only.🍕','Try our Chicken Tikka Pizza — desi flavors you\'ll love!'],
+  'shawarma':['Our Zaiqa Shawarma is famous citywide! Rs. 299 with garlic sauce.🌯','Turkish Shawarma is also available — authentic Middle Eastern flavor!'],
+  'deal':['Today\'s best deal: Buy 1 Get 1 Free on all burgers! 🔥','Family Combo: 2 Burgers + Pizza + 4 Drinks for just Rs. 1,499!'],
+  'deliver':['We deliver in 30-45 minutes!🛵 Free delivery on orders above Rs. 500!','Real-time tracking available — you can watch your rider live!'],
+  'price':['Our prices start from Rs. 149 for drinks to Rs. 899 for premium pizzas.','Best value is our combo deals! Check the Deals page!'],
+  'order':['You can order by clicking "Order Now" or going to Menu!😊','Add items to cart and checkout — we accept Cash, JazzCash & Card!'],
+};
+function getBotReply(msg){
+  const m=msg.toLowerCase();
+  for(const[k,v] of Object.entries(botReplies)){if(m.includes(k))return v[Math.floor(Math.random()*v.length)];}
+  return 'Shukriya! 😊 Aap koi bhi menu item ke baare mein pooch sakte hain — burgers, pizza, shawarma, deals ya delivery!';
+}
+function sendChat(){
+  const input=document.getElementById('chatInput');
+  const msg=input.value.trim();
+  if(!msg) return;
+  const msgs=document.getElementById('chatMsgs');
+  msgs.innerHTML+=`<div class="msg user">${msg}</div>`;
+  input.value='';
+  setTimeout(()=>{msgs.innerHTML+=`<div class="msg bot">🤖 ${getBotReply(msg)}</div>`;msgs.scrollTop=msgs.scrollHeight;},600);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+// ======== MOBILE MENU ========
+function toggleMobileMenu(){const m=document.getElementById('mobileMenu');m.style.display=m.style.display==='none'?'block':'none';}
+
+// ======== ETA COUNTDOWN ========
+let etaMins=25;
+setInterval(()=>{if(etaMins>0){etaMins--;const el=document.getElementById('etaTime');if(el)el.textContent=etaMins+' MIN';}},60000);
+
+// ======== THREE.JS HERO 3D ========
+(function(){
+  const canvas=document.getElementById('heroCanvas');
+  if(!canvas||typeof THREE==='undefined') return;
+  const w=canvas.clientWidth||400,h=canvas.clientHeight||400;
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setSize(w,h);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(50,w/h,.1,100);
+  camera.position.set(0,0,5);
+  // Lights
+  scene.add(new THREE.AmbientLight(0xffe0b0,.5));
+  const l1=new THREE.PointLight(0xE63329,4,15);l1.position.set(-3,3,2);scene.add(l1);
+  const l2=new THREE.PointLight(0xFCD34D,3,15);l2.position.set(3,1,2);scene.add(l2);
+  // Bun top
+  const bunTopGeo=new THREE.SphereGeometry(1,.5,0,Math.PI*2,0,Math.PI*.5);
+  const bunMat=new THREE.MeshStandardMaterial({color:0xD4A017,roughness:.7,metalness:.1});
+  const bunTop=new THREE.Mesh(new THREE.SphereGeometry(1,32,32,0,Math.PI*2,0,Math.PI*.5),bunMat);
+  bunTop.position.y=.8;scene.add(bunTop);
+  // Sesame seeds
+  for(let i=0;i<8;i++){
+    const s=new THREE.Mesh(new THREE.SphereGeometry(.05,8,8),new THREE.MeshStandardMaterial({color:0xF5E642}));
+    const a=Math.random()*Math.PI*2,r=.4+Math.random()*.4;
+    s.position.set(Math.cos(a)*r,.75+Math.random()*.15,Math.sin(a)*r);
+    bunTop.add(s);
+  }
+  // Patty
+  const pattyMat=new THREE.MeshStandardMaterial({color:0x6B3A2A,roughness:.9});
+  const patty=new THREE.Mesh(new THREE.CylinderGeometry(.95,.95,.18,32),pattyMat);
+  patty.position.y=.25;scene.add(patty);
+  // Cheese
+  const cheeseMat=new THREE.MeshStandardMaterial({color:0xF4C430,roughness:.8});
+  const cheese=new THREE.Mesh(new THREE.BoxGeometry(2,.08,2),cheeseMat);
+  cheese.position.y=.15;scene.add(cheese);
+  // Lettuce
+  const letGeo=new THREE.TorusGeometry(.9,.1,8,32);
+  const letMat=new THREE.MeshStandardMaterial({color:0x22C55E,roughness:.9});
+  const lettuce=new THREE.Mesh(letGeo,letMat);
+  lettuce.position.y=.05;lettuce.rotation.x=Math.PI*.05;scene.add(lettuce);
+  // Bun bottom
+  const bunBot=new THREE.Mesh(new THREE.CylinderGeometry(1,1,.2,32),new THREE.MeshStandardMaterial({color:0xC8860A,roughness:.8}));
+  bunBot.position.y=-.4;scene.add(bunBot);
+  // Group
+  const burger=new THREE.Group();
+  [bunTop,patty,cheese,lettuce,bunBot].forEach(m=>{scene.remove(m);burger.add(m);});
+  scene.add(burger);
+  burger.rotation.x=-.15;
+  let mouseX=0,mouseY=0;
+  document.addEventListener('mousemove',e=>{mouseX=(e.clientX/window.innerWidth-.5)*2;mouseY=(e.clientY/window.innerHeight-.5)*2;});
+  let t=0;
+  (function animate(){
+    requestAnimationFrame(animate);t+=.01;
+    burger.rotation.y+=.008;
+    burger.position.y=Math.sin(t)*.15;
+    l1.position.x=Math.sin(t*.7)*3;
+    l2.position.x=Math.cos(t*.5)*3;
+    renderer.render(scene,camera);
+  })();
+})();
+
+// ======== INIT ========
+renderProducts('featuredGrid', menuData.slice(0,8));
+renderProducts('menuGrid', menuData);
+renderBranches();
+renderGallery();
+</script>
+</body>
+</html>

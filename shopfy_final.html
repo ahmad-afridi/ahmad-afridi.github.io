@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHOPFY – shabi store</title>
+<style>
+  :root {
+    --dark: #e3f2fd;
+    --black: #f0f8ff;
+    --orange: #0066cc;
+    --orange-light: #0088ff;
+    --white: #1a3a52;
+  }
+  * { box-sizing: border-box; margin:0; padding:0; }
+  body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); color: var(--white); overflow-x:hidden; }
+  header { position: sticky; top:0; background: var(--black); display:flex; align-items:center; justify-content:space-between; padding:10px 20px; z-index:1000; animation: slideDown 0.6s ease-out; box-shadow: 0 4px 15px rgba(0,102,204,0.2); }
+  @keyframes slideDown { from { transform: translateY(-100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .logo { font-size:1.5rem; font-weight:bold; color: var(--orange); cursor:pointer; animation: fadeInScale 0.8s ease-out; }
+  @keyframes fadeInScale { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+  nav ul { list-style:none; display:flex; gap:20px; }
+  nav a { color:var(--white); text-decoration:none; font-weight:600; animation: slideInNav 0.6s ease-out backwards; transition: color 0.3s; }
+  nav a:hover { color: var(--orange); text-shadow: 0 0 10px rgba(255,107,0,0.6); }
+  nav li:nth-child(1) a { animation-delay: 0.1s; }
+  nav li:nth-child(2) a { animation-delay: 0.2s; }
+  nav li:nth-child(3) a { animation-delay: 0.3s; }
+  nav li:nth-child(4) a { animation-delay: 0.4s; }
+  @keyframes slideInNav { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+  .search-cart { display:flex; align-items:center; gap:15px; animation: slideInRight 0.6s ease-out 0.2s backwards; }
+  @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  .search-box { position: relative; animation: slideInSearch 0.8s ease-out 0.1s backwards; }
+  .search-box input { 
+    padding:8px 15px; 
+    border:2px solid transparent; 
+    border-radius:20px; 
+    background: rgba(0,102,204,0.1); 
+    color: var(--white);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+    width: 150px;
+    position: relative;
+  }
+  .search-box input::placeholder { color: rgba(26,58,82,0.6); transition: color 0.3s; }
+  .search-box input:hover { 
+    background: rgba(0,102,204,0.15); 
+    border-color: var(--orange); 
+    box-shadow: 0 0 15px rgba(0,102,204,0.3), inset 0 0 10px rgba(0,102,204,0.1);
+  }
+  .search-box input:focus { 
+    outline: none; 
+    width: 250px;
+    background: rgba(0,102,204,0.2); 
+    box-shadow: 0 0 25px rgba(0,102,204,0.6), inset 0 0 15px rgba(0,102,204,0.15);
+    border-color: var(--orange-light);
+    transform: scale(1.05);
+  }
+  .search-box input:focus::placeholder { color: rgba(0,102,204,0.7); }
+  @keyframes slideInSearch { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+  .cart { position:relative; cursor:pointer; animation: bounce 1s infinite; transition: transform 0.2s; font-size: 1.5rem; }
+  .cart:hover { transform: scale(1.15) rotate(15deg); }
+  .cart::after { content: attr(data-count); position:absolute; top:-8px; right:-8px; background:var(--orange); color:#fff; border-radius:50%; padding:2px 5px; font-size:0.75rem; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);} }
+  main { padding:20px; }
+  #hero { position:relative; text-align:center; padding:100px 20px; background: linear-gradient(45deg,#bbdefb,#e3f2fd); overflow:hidden; }
+  #hero h1 { 
+    font-size:3rem; 
+    animation: textShift 5s infinite, bounce 1.2s infinite 0.2s, glowPulse 3s infinite;
+    text-shadow: 0 0 20px rgba(0,102,204,0.5);
+    letter-spacing: 2px;
+    font-weight: 900;
+  }
+  @keyframes textShift { 
+    0%,100%{color:var(--orange);} 
+    50%{color:var(--orange-light);} 
+  }
+  @keyframes glowPulse {
+    0%, 100% { text-shadow: 0 0 20px rgba(0,102,204,0.5), 0 0 40px rgba(0,102,204,0.3); }
+    50% { text-shadow: 0 0 40px rgba(0,102,204,0.8), 0 0 80px rgba(0,102,204,0.5), 0 0 120px rgba(0,102,204,0.3); }
+  }
+  .hero-buttons { margin-top:20px; display:flex; gap:20px; justify-content:center; }
+  .hero-buttons button { background:var(--orange); border:none; padding:15px 30px; color:#fff; font-size:1rem; cursor:pointer; border-radius:30px; transition:background 0.3s; }
+  .hero-buttons button:hover { background:var(--orange-light); }
+  .float-bg { position:absolute; width:200px; height:200px; border-radius:50%; background:rgba(0,102,204,0.15); top:-50px; left:-50px; animation:float 6s infinite; }
+  .float-bg:nth-child(2){width:150px;height:150px;top:auto;bottom:-60px;right:-60px;animation-duration:8s;}
+  @keyframes float { 0%{transform:translate(0,0);}50%{transform:translate(20px,20px);}100%{transform:translate(0,0);} }
+  .grid { display:grid; gap:20px; }
+  .products, .categories { grid-template-columns: repeat(auto-fit,minmax(200px,1fr)); }
+  .product-card, .category-card { background:#ffffff; padding:15px; border-radius:8px; position:relative; overflow:hidden; cursor:pointer; opacity:0; transform:translateY(20px); animation:fadeIn 0.5s forwards; box-shadow: 0 4px 15px rgba(0,102,204,0.1); border: 1px solid rgba(0,102,204,0.15); }
+  .product-card { color: var(--white); }
+  .product-card img { width:100%; border-radius:5px; }
+  .product-card h4{margin:10px 0; color: var(--white);}
+  .product-card .price{font-weight:bold; color: var(--white);}
+  .product-card .discount{color:var(--orange); margin-left:5px;}
+  .product-card button { background: var(--orange); color: #fff; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer; transition: background 0.3s; font-weight: bold; }
+  .product-card button:hover { background: var(--orange-light); }
+  @keyframes fadeIn{to{opacity:1;transform:translateY(0);}}
+  footer { background: #f0f8ff; padding:40px 20px; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:20px; }
+  footer h5{color:var(--orange);}
+  footer a{color:var(--white);text-decoration:none;font-size:0.9rem;}
+  .cart-modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(26,58,82,0.7); display:none; align-items:center; justify-content:center; }
+  .cart-content { background: #e3f2fd; padding:20px; width:90%; max-width:500px; border-radius:8px; color: var(--white); }
+  .cart-content h3{margin-bottom:15px;}
+  .cart-item { display:flex; justify-content:space-between; margin-bottom:10px; }
+  .cart-item button{background:var(--orange);border:none;padding:5px 10px;color:#fff;cursor:pointer;border-radius:4px;}
+  .cart-content button { background: var(--orange); color: #fff; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; margin-right: 10px; transition: background 0.3s; font-weight: bold; }
+  .cart-content button:hover { background: var(--orange-light); }
+  .small-screen nav ul{flex-direction:column;background:#f0f8ff;position:absolute;top:60px;right:0;width:200px;display:none;}
+  .small-screen .menu-toggle{display:block;cursor:pointer;}
+  @media (max-width:768px){
+    .hero-buttons{flex-direction:column;}
+    header { flex-wrap:wrap; }
+    .search-cart{width:100%;justify-content:space-between;}
+    nav ul{gap:10px;}
+    .small-screen nav ul{display:flex;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo" onclick="navigate('home')">SHOPFY</div>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+  <nav><ul>
+    <li><a href="#" onclick="navigate('home'); return false;">HOME</a></li>
+    <li><a href="#" onclick="navigate('men'); return false;">MEN'S</a></li>
+    <li><a href="#" onclick="navigate('women'); return false;">WOMEN'S</a></li>
+    <li><a href="#" onclick="navigate('sale'); return false;">SALE</a></li>
+  </ul></nav>
+  <div class="search-cart">
+    <div class="search-box"><input type="text" placeholder="Search products..."></div>
+    <div class="cart" data-count="0" onclick="showCart()">🛒</div>
+  </div>
+</header>
+
+<main id="content">
+  <!-- content injected by JS -->
+</main>
+
+<div class="cart-modal" id="cartModal">
+  <div class="cart-content">
+    <h3>Your Cart</h3>
+    <div id="cartItems"></div>
+    <button onclick="checkout()">Checkout</button>
+    <button onclick="closeCart()">Close</button>
+  </div>
+</div>
+
+<script>
+  const state={cart:[]};
+  function navigate(page){renderPage(page);window.scrollTo(0,0);}
+  function toggleMenu(){document.querySelector('nav ul').classList.toggle('open');}
+  function showCart(){document.getElementById('cartModal').style.display='flex'; renderCart();}
+  function closeCart(){document.getElementById('cartModal').style.display='none';}
+  function addToCart(item){state.cart.push(item);updateCartCount();}
+  function updateCartCount(){document.querySelector('.cart').setAttribute('data-count',state.cart.length);}
+  function renderCart(){
+    const container=document.getElementById('cartItems');container.innerHTML='';
+    state.cart.forEach((i,idx)=>{
+      const div=document.createElement('div');div.className='cart-item';
+      div.innerHTML=`<span>${i.name} (${i.price})</span><button onclick="removeCart(${idx})">✖</button>`;
+      container.appendChild(div);
+    });
+  }
+  function removeCart(idx){state.cart.splice(idx,1);updateCartCount();renderCart();}
+  function checkout(){alert('Thank you for your purchase!');state.cart=[];updateCartCount();closeCart();}
+  function applyFadeDelay(parent){[...parent.children].forEach((c,i)=>{c.style.animationDelay=(i*0.1)+'s';});}
+  function renderHero(){
+    return `<section id="hero"><div class="float-bg"></div><div class="float-bg"></div>
+      <h1>shabi store</h1><div class="hero-buttons">
+      <button onclick="navigate('men')">SHOP MEN'S</button>
+      <button onclick="navigate('women')">SHOP WOMEN'S</button></div></section>`;
+  }
+  function renderGrid(items,clickable=false){
+    let out='<div class="grid products">';
+    items.forEach((p,idx)=>out+=`<div class="product-card" onclick="${clickable?'navigate(\''+p.page+'\')':''}">
+      <h4>${p.name}</h4>
+      <div><span class="price">${p.price}</span>${p.discount?`<span class="discount">-${p.discount}</span>`:''}</div>
+      ${p.emoji?' <div style="font-size:3rem">'+p.emoji+'</div>':''}
+      ${p.add?`<button onclick="event.stopPropagation(); addToCart({name:'${p.name}',price:'${p.price}'})">Add to cart</button>`:''}
+      </div>`); out+='</div>'; return out;
+  }
+  function renderCategories(){
+    const cats=[{name:'👨 Men',page:'men'},{name:'👩 Women',page:'women'},{name:'🔥 Sale',page:'sale'},{name:'🎁 Gift Cards',page:'home'}];
+    let out='<h2>Shop by Category</h2><div class="grid categories">';
+    cats.forEach(c=>out+=`<div class="category-card" onclick="navigate('${c.page}')" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:150px;font-size:2rem;border:2px solid var(--orange)">${c.name}</div>`);
+    out+='</div>'; return out;
+  }
+  function renderFooter(){
+    return `<footer>
+      <div><h5>About</h5><a href="#">Our Story</a><br><a href="#">Careers</a><br><a href="#">Sustainability</a></div>
+      <div><h5>Support</h5><a href="#">Help Center</a><br><a href="#">Contact Us</a><br><a href="#">Shipping Info</a></div>
+      <div><h5>Legal</h5><a href="#">Privacy Policy</a><br><a href="#">Terms</a><br><a href="#">Cookie Policy</a></div>
+      <div><h5>Follow Us</h5><a href="#">Instagram</a><br><a href="#">Twitter</a><br><a href="#">Facebook</a></div>
+    </footer>`;
+  }
+  function renderPage(page){
+    let html='';
+    if(page==='home'){
+      const featured=[
+        {name:'Pro Running Shoes',price:'$179.99',discount:'18%',emoji:'👟',add:true},
+        {name:'Elite Sports Tee',price:'$49.99',discount:'28%',emoji:'👕',add:true},
+        {name:'Performance Backpack',price:'$89.99',discount:'25%',emoji:'🎒',add:true},
+        {name:'Smart Fitness Watch',price:'$299.99',discount:'14%',emoji:'⌚',add:true},
+        {name:'Athletic Crop Top',price:'$54.99',discount:'26%',emoji:'👚',add:true},
+        {name:'Training Shorts',price:'$64.99',discount:'23%',emoji:'🩳',add:true},
+        {name:'Basketball Shoes',price:'$189.99',discount:'20%',emoji:'🥾',add:true},
+        {name:'Yoga Pants',price:'$84.99',discount:'26%',emoji:'🧘',add:true},
+        {name:'Sports Jacket',price:'$139.99',discount:'22%',emoji:'🧥',add:true},
+        {name:'Compression Leggings',price:'$89.99',discount:'25%',emoji:'🩱',add:true},
+        {name:'Running Headband',price:'$24.99',discount:'28%',emoji:'🎽',add:true},
+        {name:'Duffel Bag',price:'$64.99',discount:'31%',emoji:'👜',add:true}
+      ];
+      html+=renderHero()+'<h2>Featured Products</h2>'+renderGrid(featured)+renderCategories()+renderFooter();
+    } else if(page==='men'){
+      const products=[
+        {name:'Pro Running Shoes',price:'$179.99',discount:'18%',emoji:'👟',add:true},
+        {name:'Performance T-Shirt',price:'$49.99',discount:'28%',emoji:'👕',add:true},
+        {name:'Training Shorts',price:'$64.99',discount:'23%',emoji:'🩳',add:true},
+        {name:'Sports Jacket',price:'$139.99',discount:'22%',emoji:'🧥',add:true},
+        {name:'Athletic Socks (3pk)',price:'$29.99',discount:'25%',emoji:'🧦',add:true},
+        {name:'Compression Leggings',price:'$89.99',discount:'25%',emoji:'🩱',add:true},
+        {name:'Basketball Shoes',price:'$189.99',discount:'20%',emoji:'🥾',add:true},
+        {name:'Sports Backpack',price:'$99.99',discount:'23%',emoji:'🎒',add:true},
+        {name:'Lightweight Hoodie',price:'$79.99',discount:'27%',emoji:'🧥',add:true},
+        {name:'Training Gloves',price:'$44.99',discount:'30%',emoji:'🧤',add:true},
+        {name:'Running Socks Elite',price:'$19.99',discount:'33%',emoji:'🧦',add:true},
+        {name:'Gym Duffel Bag',price:'$64.99',discount:'31%',emoji:'👜',add:true},
+        {name:'Moisture Wicking Tank',price:'$44.99',discount:'24%',emoji:'👕',add:true},
+        {name:'Athletic Underwear',price:'$39.99',discount:'33%',emoji:'🩲',add:true},
+        {name:'Performance Headband',price:'$24.99',discount:'28%',emoji:'🎽',add:true}
+      ];
+      html+='<h2>Men\'s Collection</h2>'+renderGrid(products)+renderFooter();
+    } else if(page==='women'){
+      const products=[
+        {name:'Women\'s Running Shoes',price:'$169.99',discount:'19%',emoji:'👟',add:true},
+        {name:'Athletic Crop Top',price:'$54.99',discount:'26%',emoji:'👚',add:true},
+        {name:'Yoga Pants',price:'$84.99',discount:'26%',emoji:'🧘',add:true},
+        {name:'Performance Leggings',price:'$94.99',discount:'24%',emoji:'🩱',add:true},
+        {name:'Sports Bra Pro',price:'$69.99',discount:'30%',emoji:'🏃',add:true},
+        {name:'Women\'s Track Jacket',price:'$129.99',discount:'23%',emoji:'🧥',add:true},
+        {name:'Fitness Shorts',price:'$59.99',discount:'25%',emoji:'🩳',add:true},
+        {name:'Women\'s Fitness Watch',price:'$279.99',discount:'15%',emoji:'⌚',add:true},
+        {name:'Women\'s Casual Hoodie',price:'$74.99',discount:'28%',emoji:'🧥',add:true},
+        {name:'Athletic Headband',price:'$22.99',discount:'30%',emoji:'🎽',add:true},
+        {name:'Running Tank Top',price:'$49.99',discount:'28%',emoji:'👕',add:true},
+        {name:'Women\'s Gym Bag',price:'$69.99',discount:'30%',emoji:'👜',add:true},
+        {name:'Women\'s Socks (3pk)',price:'$32.99',discount:'26%',emoji:'🧦',add:true},
+        {name:'Mesh Sports Bra',price:'$64.99',discount:'23%',emoji:'👙',add:true},
+        {name:'Women\'s Windbreaker',price:'$109.99',discount:'26%',emoji:'🧥',add:true}
+      ];
+      html+='<h2>Women\'s Collection</h2>'+renderGrid(products)+renderFooter();
+    } else if(page==='sale'){
+      const saleitems=[
+        {name:'Clearance T-Shirts',price:'$19.99',discount:'75%',emoji:'👕',add:true},
+        {name:'Clearance Running Shoes',price:'$99.99',discount:'70%',emoji:'👟',add:true},
+        {name:'Clearance Activewear Bundle',price:'$39.99',discount:'72%',emoji:'👚',add:true},
+        {name:'Clearance Accessories',price:'$14.99',discount:'75%',emoji:'🧢',add:true},
+        {name:'Clearance Socks Bundle',price:'$9.99',discount:'80%',emoji:'🧦',add:true}
+      ];
+      html+='<h2>🔥 SALE - Up to 80% OFF!</h2>'+renderGrid(saleitems)+renderFooter();
+    }
+    document.getElementById('content').innerHTML=html;
+    const gridElement = document.querySelector('.grid');
+    if(gridElement) applyFadeDelay(gridElement);
+  }
+  window.onload=()=>{renderPage('home');updateCartCount();};
+</script>
+</body>
+</html>
