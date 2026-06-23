@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmad Afridi | Portfolio</title>
+<link rel="stylesheet" href="./style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- Loader -->
+<div id="loader">
+  <div class="loader-text" style="font-size: x-large;">Web Developer</div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="logo"><img src="./download.jpg" alt="" style="height: 60px; width: 100%; border-radius: 20%;"></div>
+
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#certificates">Certificates</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <!-- Dark/Light toggle — ID must be "theme-toggle" to match script.js -->
+    <button id="theme-toggle">🌙</button>
+
+    <!-- Mobile menu toggle — IDs must match script.js -->
+    <div class="menu-container">
+      <button id="menu-toggle"><i class="fas fa-bars"></i></button>
+      <div class="menu-dropdown" id="menu-dropdown">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#certificates">Certificates</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section id="home">
+  <div class="hero">
+    <!-- Class "hero-content" to match CSS -->
+    <div class="hero-content">
+      <h3>Hello I'm</h3>
+      <h1>Ahmad Afridi</h1>
+      <h2 id="typing"></h2>
+      <p style="font-size: larger; font-style: italic; color: rgb(61, 61, 237);">Come on About Me</p>
+      <!-- Class "hero-buttons" + "btn" / "btn btn2" to match CSS -->
+      <div class="hero-buttons">
+        <a href="#projects" class="btn">Projects</a>
+        <a href="./Doc2.pdf" download="./Doc2.pdf" class="btn btn2">Download CV</a>
+      </div>
+    </div>
+
+    <!-- Class "hero-image" to match CSS -->
+    <div class="hero-image">
+      <img class="hero-photo" src="./WhatsApp-Image-2025-10-24-at-8.53.51-AM.jpeg" alt="Ahmad Afridi">
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <h1 class="section-title">About Me</h1>
+  <div class="about-container">
+    <div class="about-image">
+      <img src="./download.jpg" alt="Profile">
+    </div>
+    <div>
+      <p style="font-size: 1.2em; color: #e8ac06; line-height: 1.6;">
+        <i>I am Ahmad Afridi. Passionate learner of
+        Cybersecurity, Ethical Hacking, Networking, Linux,
+        and Modern Web Development.
+
+        Passionate Web Designer & Frontend Developer with expertise in HTML, CSS, JavaScript, and AI-powered development with AI. I create modern, responsive, and user-friendly websites with a focus on clean design, performance, and great user experience. Always learning new technologies and turning creative ideas into professional digital solutions.</i>
+        
+      </p>
+      <div class="counter-box">
+        <div class="counter"><h2>2+</h2><p>Years Learning</p></div>
+        <div class="counter"><h2>50+</h2><p>Projects</p></div>
+        <div class="counter"><h2>3+</h2><p>Certificates</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+  <h1 class="section-title">Skills</h1>
+  <!-- Class "skills-container" to match CSS progress bars -->
+  <div class="skills-container">
+    <div class="skill"><h4>HTML</h4><div class="progress"><span style="width:90%"></span></div></div>
+    <div class="skill"><h4>CSS</h4><div class="progress"><span style="width:85%"></span></div></div>
+    <div class="skill"><h4>JavaScript</h4><div class="progress"><span style="width:70%"></span></div></div>
+    <div class="skill"><h4>Linux</h4><div class="progress"><span style="width:75%"></span></div></div>
+    <div class="skill"><h4>Networking</h4><div class="progress"><span style="width:80%"></span></div></div>
+    <div class="skill"><h4>Cybersecurity</h4><div class="progress"><span style="width:65%"></span></div></div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <h1 class="section-title">Services</h1>
+  <!-- Class "services-container" + "service-card" to match CSS -->
+  <div class="services-container">
+    <div class="service-card">
+      <i class="fa-solid fa-code"></i>
+      <h2>Web Development</h2>
+    </div>
+    <div class="service-card">
+      <i class="fa-solid fa-shield-halved"></i>
+      <h2>Cybersecurity</h2>
+    </div>
+    <div class="service-card">
+      <i class="fa-solid fa-network-wired"></i>
+      <h2>Networking</h2>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+  <h1 class="section-title">Projects</h1>
+  <!-- Class "projects-container" + "project-card" to match CSS -->
+  <div class="projects-container">
+
+    <div class="project-card">
+      <img src="./Screenshot 2026-06-05 183253.png" alt="Portfolio Website">
+      <h3>E-commerse</h3>
+      <p>E-commerse</p>
+      <a href="./shopfy_final.html"><button>Live Demo</button></a>
+    </div>
+
+    <div class="project-card">
+      <img src="./Screenshot 2026-06-06 121902.png" alt="Cyber Dashboard">
+      <h3>Cyber Dashboard</h3>
+      <p>Security Monitoring Dashboard</p>
+      <a href="./index1.html"><button>Live Demo</button></a>
+      
+    </div>
+
+    <div class="project-card">
+      <img src="./Screenshot 2026-06-06 120921.png" alt="Cyber Dashboard 2">
+      <h3>Cyber Dashboard</h3>
+      <p>Security Monitoring Dashboard</p>
+      <a href="./website.html"><button>Live Demo</button></a>
+    </div>
+
+    <div class="project-card">
+      <img src="./Screenshot 2026-06-08 232127.png" alt="Hacker Dashboard">
+      <h3>FAST FOODS</h3>
+      <p>FAST FOODS</p>
+      <a href="./piiza day/pizza.html"><button>Live Demo</button></a>
+    </div>
+
+    <div class="project-card">
+      <img src="./Screenshot_9-6-2026_122927_.jpeg" alt="Cyber Dashboard 3">
+      <h3>FAST FOODS</h3>
+      <p>FAST FOODS</p>
+      <a href="./pizza2.html"><button>Live Demo</button></a>
+    </div>
+
+    <div class="project-card">
+      <img src="./Screenshot 2026-06-06 122148.png" alt="Footprinting Lab">
+      <h3>Footprinting Lab</h3>
+      <p>Educational Footprinting Lab</p>
+      <a href="./educational_footprinting_website_html_urdu.html"><button>Live Demo</button></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Cyber Terminal -->
+<section>
+  <h1 class="section-title">Cyber Terminal</h1>
+  <!-- Class "terminal-box" to match CSS -->
+  <div class="terminal-box">
+    <pre>
+> whoami
+Ahmad Afridi
+
+> skills
+HTML | CSS | JavaScript | Linux | Networking | Cybersecurity
+    </pre>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section id="timeline">
+  <h1 class="section-title">Journey</h1>
+  <div class="timeline">
+    <div class="timeline-item">
+      <h3>2024</h3>
+      <p>Started Learning Technology</p>
+    </div>
+    <div class="timeline-item">
+      <h3>2025</h3>
+      <p>Networking &amp; Linux &amp; DIT (Diploma in Information Technology)</p>
+    </div>
+    <div class="timeline-item">
+      <h3>2026</h3>
+      <p>Cybersecurity Learning &amp; CEH (Certified Ethical Hacker)</p>
+    </div>
+  </div>
+</section>
+
+<!-- Certificates -->
+<section id="certificates">
+  <h1 class="section-title">Certificates</h1>
+  <!-- <div class="certificate-gallery">
+
+    <a href="./IMG-20240510-WA0014[1]2.jpg"><img src="./IMG-20240510-WA0014[1]2.jpg" alt="Certificate 1" style="width: 70%; height: 300px;"></a>
+
+    <a href="./Ethical_Hacker_certificate_uroojahmad990-gmail-com_8842e8bc-bc0b-4513-b990-028aa41650c3_page-0001 (1).jpg"><img src="./Ethical_Hacker_certificate_uroojahmad990-gmail-com_8842e8bc-bc0b-4513-b990-028aa41650c3_page-0001 (1).jpg" alt="Certificate 2"></a>
+
+
+    <!-- <img src="cert3.jpg" alt="Certificate 3">  -->
+  
+  <!-- </div> -->
+  <div class="certificate-list">
+    <h3>Certifications</h3>
+    <ul>
+     <i><li>FA (12)</li>
+      <li>CEH</li>
+      <li>Ethical Hacker</li>
+      <li>DIT (Diploma in Information Technology)</li></i> 
+    </ul>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h1 class="section-title">Contact</h1>
+  <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <input type="text" name="subject" placeholder="Subject" required>
+    <textarea name="message" placeholder="Message" rows="8" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+  <div style="text-align:center; margin-top:30px; color:dodgerblue;">
+    <p><strong>Contact Number:</strong></p>
+    <p style="font-size:1.2em;">+923335028530</p>
+  </div>
+</section>
+
+<footer>
+  <div class="socials">
+    <a href="https://github.com/ahmad-afridi" target="_blank" rel="noreferrer noopener">
+      <i class="fab fa-github"></i>
+    </a>
+    <a href="https://www.linkedin.com/in/ahmad-afridi-6774a7350" target="_blank" rel="noreferrer noopener">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <a href="https://www.instagram.com/ahmed.ptm/" target="_blank" rel="noreferrer noopener">
+      <i class="fab fa-instagram"></i>
+    </a>
+  </div>
+  <p>© 2026 Ahmad Afridi ©Develper Pvt Ltd <br> ©since 2024</p>
+</footer>
+
+<script src="./script.js"></script>
+</body>
+</html>
