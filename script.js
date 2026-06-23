@@ -5,15 +5,13 @@ window.addEventListener("load", () => {
 
     setTimeout(() => {
         loader.style.opacity = "0";
-        loader.style.transition = "0.5s";
+        loader.style.transition = "0.8s ease";
 
         setTimeout(() => {
             loader.style.display = "none";
-        }, 500);
-
-    }, 1000);
+        }, 800);
+    }, 1500);
 });
-
 
 // Typing Effect
 
